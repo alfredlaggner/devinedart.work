@@ -1,0 +1,41 @@
+@import '../colors/purple-green';
+@import '../main';
+
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
+.btn {
+	&.btn-fill { color: #fff; }
+	&.btn-inverse-colored {
+		&:hover { color: #fff; }
+	}
+}
+
+/* ==========================================================================
+   Titles
+   ========================================================================== */
+
+.title-section {
+	h1, h2, h3, h4, h5, h6 {
+		&:before, &:after { background: @color-secondary; opacity: 1; }
+	}
+}
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.card-item {
+	.card-item-caption,
+	&.card-item-colored .card-item-caption {
+		background: -moz-linear-gradient(top,  rgba(52,52,52,0) 0%, rgba(52,52,52,0.85) 100%);
+		background: -webkit-linear-gradient(top,  rgba(52,52,52,0) 0%,rgba(52,52,52,0.85) 100%);
+		background: linear-gradient(to bottom,  rgba(52,52,52,0) 0%,rgba(52,52,52,0.85) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00343434', endColorstr='#d9343434',GradientType=0 );
+	}
+}
+
+
+
+

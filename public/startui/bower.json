@@ -1,0 +1,20 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "authors": [
+    "ThemesAnytime <support@themesanytime.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.2",
+    "jquery": "~1.10.2",
+    "matchHeight": "matchheight#~0.6.0",
+    "tether": "~1.2.0"
+  }
+}

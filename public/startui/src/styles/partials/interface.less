@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
+.btn { height: 56px; border: solid 3px @color-primary; line-height: 50px; padding: 0 25px; padding-top: 2px; background: none; color: @color-primary; font-size: 1.125rem; font-family: @font-addl; font-weight: 700;
+   &:hover { background-color: @color-primary; color: #fff; }
+
+   &.btn-fill { color: @color-text; background-color: @color-secondary; border-color: @color-secondary;
+      &:hover { background-color: darken(@color-secondary, 12%); border-color: darken(@color-secondary, 12%); }
+   }
+
+   &.btn-inverse { border-color: #fff; color: #fff;
+      &:hover { background-color: #fff; color: @color-primary; }
+   }
+
+   &.btn-inverse-colored { border-color: @color-secondary; color: #fff;
+      &:hover { background-color: @color-secondary; color: @color-text; }
+   }
+
+   &.btn-sm { font-size: 1rem; height: 40px; border-width: 2px; line-height: 36px; border-radius: 3px; padding-top: 1px; }
+}
+
+.btns-group { text-align: center;
+   .btn { margin: 0 10px 20px; }
+}
+
+
+/* ==========================================================================
+   Titles
+   ========================================================================== */
+
+.title-section { text-align: center; font-family: @font-addl; font-weight: 400; font-size: 2.5rem /*40/16*/; padding: 0 0 40px;
+   h1, h2, h3, h4, h5, h6 { font-weight: inherit; font-size: inherit; margin: 0 70px 10px; display: inline-block; position: relative;
+      &:before, &:after { content: ''; display: block; width: 50px; height: 3px; position: absolute; top: 50%; background: @color-primary; opacity: .5; margin-top: -1px; }
+      &:before { left: -70px; }
+      &:after { right: -70px; }
+   }
+   .sub { font-weight: 300; font-family: @font-text; font-size: 1.25rem; line-height: 1.7; }
+
+   @media (max-width: @sm-max-width) { font-size: 1.5rem;
+      h1, h2, h3, h4, h5, h6 { margin-right: 20px; margin-left: 20px;
+         &:before, &:after { width: 10px; margin-top: -2px; }
+         &:before { left: -20px; }
+         &:after { right: -20px; }
+      }
+   }
+}
+
+/* ==========================================================================
+   Section
+   ========================================================================== */
+
+.section { padding: 40px 0 30px; }
+
+.section-fill { background: @color-primary; color: #fff;
+   .title-section {
+      h1, h2, h3, h4, h5, h6 {
+         &:before, &:after { background-color: @color-secondary; opacity: 1; }
+      }
+   }
+}
+
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.card-item { height: 290px; border-radius: 6px; background: no-repeat 50% 50%; background-size: cover; position: relative; margin: 0 auto 30px; text-align: center; color: #fff;
+   .card-item-pic { display: none; }
+   .card-item-caption { position: absolute; left: 0; bottom: 0; border-radius: 0 0 6px 6px; width: 100%; min-height: 120px;
+      background: -moz-linear-gradient(top,  rgba(0,169,152,0) 0%, rgba(0,169,152,0.85) 100%);
+      background: -webkit-linear-gradient(top,  rgba(0,169,152,0) 0%,rgba(0,169,152,0.85) 100%);
+      background: linear-gradient(to bottom,  rgba(0,169,152,0) 0%,rgba(0,169,152,0.85) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0000a998', endColorstr='#d900a998',GradientType=0 );
+
+      h1, h2, h3, h4, h5, h6 { position: absolute; left: 0; bottom: 0; width: 100%; margin: 0; font-weight: 700; font-size: 1.125rem; padding: 15px; }
+   }
+   .card-item-hover { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 6px; background: fade(@color-primary, 80%); padding: 117px 0 0; opacity: 0; .hover_animate(); }
+
+   &:hover .card-item-hover { opacity: 1; }
+
+   &.card-item-colored {
+      .card-item-caption {
+         background: -moz-linear-gradient(top,  rgba(0,113,167,0) 0%, rgba(0,113,167,0.85) 100%);
+         background: -webkit-linear-gradient(top,  rgba(0,113,167,0) 0%,rgba(0,113,167,0.85) 100%);
+         background: linear-gradient(to bottom,  rgba(0,113,167,0) 0%,rgba(0,113,167,0.85) 100%);
+         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000071a7', endColorstr='#d90071a7',GradientType=0 );
+      }
+   }
+
+   @media (max-width: @sm-max-width) { max-width: 330px; }
+}
+
+

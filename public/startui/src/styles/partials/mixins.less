@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+
+.clearfix() { zoom: 1;
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}
+
+.placeholder_color(@color) {
+	::-webkit-input-placeholder { color: @color; }
+	::-moz-placeholder { color: @color; opacity: 1 !important; }
+	:-moz-placeholder { color: @color; opacity: 1 !important; }
+	::-moz-placeholder { color: @color; }
+	:-ms-input-placeholder { color: @color; }
+}
+
+.hover_animate() { transition: all 0.2s ease-in-out; }
+.hover_animate_none() { transition: none; }
+
+.a_colored(@color, @color-hover) { text-decoration: none; color: @color;
+	&:hover { text-decoration: none; color: @color-hover; }
+}
+
+
+
