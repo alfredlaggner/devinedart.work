@@ -11,9 +11,10 @@
 |
 */
 
+Route::view('/welcome', 'index');
 
 Auth::routes();
-
+Route::get('/test1','ProductController@index');
 Route::get('/', ['as' =>'uploads', 'uses' => 'HomeController@index']);
 
 Route::get('/import/products',['as' =>'product_upload', 'uses' => 'ProductUploadController@products_2_shopify']);
@@ -33,3 +34,4 @@ Auth::routes();
 Route::get('makeupload','ProductUploadController@export_csv');
 Route::get('/cleanup','ProductUploadController@clean_description');
 Route::get('/cleanup2','ProductUploadController@makeSkuSize');
+Route::get('/test','ProductUploadController@test');

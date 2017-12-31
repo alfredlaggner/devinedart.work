@@ -1,0 +1,140 @@
+@charset "utf-8";
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http://www.cartweaver.com/legal/eula.cfm
+ Support: http://www.cartweaver.com/support
+ ==========================================================
+ File: cw-mail.css
+ File Date: 2012-02-01
+ Description:
+ Cartweaver Email Stylesheet
+ ==========================================================
+*/
+* {
+padding: 0;
+margin: 0;
+}
+html {
+font-size: 62.5%;
+}
+/* --------- text align center on body works for older IE centering ---*/
+body {
+margin: 0;
+padding: 0;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+text-align: center;
+line-height: 1;
+background: #F5f5f5;
+}
+/* ------ WRAPPER:------- */
+#wrapper {
+margin: 12px auto;
+width: 480px;
+text-align:center;
+}
+/* ----------- MAIN TABLE text align left fixes text within body which is centered ----------*/
+table#mailcontent{
+border-collapse:collapse;
+text-align:left;
+width:480px;
+}
+table#mailcontent td{
+border:0;
+padding:0 28px;
+}
+/* ---------- STANDARD TEXT ---------*/
+p, ul{
+font-size: 11px;
+margin: 5px 0 10px 0;
+line-height: 15px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+color: #232323;
+text-align: left;
+}
+
+/* ----------- HEADER ----------*/
+table#mailcontent td#header {
+text-align: center;
+background-color: #e3e8ec;
+color:#232323;
+padding:0;
+}
+table#mailcontent td#header a {
+text-decoration: none;
+}
+table#mailcontent td#header p {
+margin:0;
+text-align:center;
+padding:0;
+}
+table#mailcontent td#header h1,
+table#mailcontent td#header h2{
+text-align:center;
+color:#232323;
+}
+table#mailcontent td#header a:link,
+table#mailcontent td#header a:visited,
+table#mailcontent td#header a:hover,
+table#mailcontent td#header a:active{
+text-decoration:none;
+color:#004080;
+}
+
+/*------- CONTENT -------*/
+table#mailcontent td.content {
+background-color: #FFFFFF;
+padding-top:12px;
+padding-bottom:12px;
+}
+p.timestamp {
+text-align: center;
+font-size: 10px;
+color: #FFFFFF;
+}
+p.sentinfo {
+text-align: left;
+font-size: 10px;
+font-style: italic;
+margin-left: 28px;
+color: #f9f9f9;
+line-height:1.4em;
+}
+h1 {
+font-size: 16px;
+color: #232323;
+margin:0;
+line-height:1.2em;
+text-align:left;
+}
+h2 {
+font-size: 18px;
+color: #232323;
+margin: 8px 0 8px 0;
+padding-bottom: 4px;
+line-height:1.2em;
+text-align:left;
+}
+h3 {
+font-size: 12px;
+font-weight:bold;
+color: #232323;
+margin: 8px 0 8px 0;
+padding-bottom: 4px;
+line-height:1.2em;
+text-align:left;
+}
+h3 a:link, h3 a:visited, h3 a:active, h3 a:hover{
+color: #004080;
+}
+/*------- FOOTER -------*/
+#footer {
+text-align: center;
+padding: 4px 0;
+background-color: #e3e8ec;
+}
+#footer p {
+text-align: center;
+}

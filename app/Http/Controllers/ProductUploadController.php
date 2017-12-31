@@ -19,23 +19,129 @@ class ProductUploadController extends Controller
     {
 
 
+        public function test()
+            {
+                $product = Product::get();
+                //         $product = Product::get();
+                //          dd($product);
+                foreach ($product as $p) {
+                    $p->image = $this->getProductImage($p->id);
+                    echo $p->image . "<br>";
+                    $p->update();
+                }
+            }
+        function getProductImage($product_id)
+            {
+                $image = [''];
+                $skus = Product::findOrFail($product_id)->images;
+                foreach ($skus as $sku) {
+                    if ($sku->imagetype_id == 3) {
+                        return $sku->filename;
+                    }
+                }
+                return NULL;
+            }
+
+        public function org_test()
+            {
+                $product = Product::whereDate('date_modified','2017-12-20')->get();
+                //         $product = Product::get();
+                //          dd($product);
+                foreach ($product as $p) {
+                    $p->name = $p->cw_product->product_name;
+                    echo $p->name . "<br>";
+                    $p->description = $p->cw_product->product_description;
+                    $p->preview_description = $p->cw_product->product_preview_description;
+                    $p->is_on_web = $p->cw_product->product_on_web;
+                    $p->is_archive = $p->cw_product->product_archive;
+                    $p->date_modified = $p->cw_product->product_date_modified;
+                    $p->special_description = $p->cw_product->product_special_description;
+                    $p->keywords = $p->cw_product->product_keywords;
+                    $p->update();
+                }
+            }
+
         public function original_2_import()
             {
 
                 /*import from original database*/
-
-
+                echo "Importing product table <br>";
+     //          $this->product_import();
                 DB::table('products as p')
-                    ->join('cw_products as cw', 'p.id', '=', 'cw.product_id')
+                    ->join('illuminearts_sql.cw_products as cw', 'p.id', '=', 'cw.product_id')
                     ->update([
                         'p.description' => DB::raw('cw.product_description'),
                         'p.name' => DB::raw('cw.product_name'),
                         'p.preview_description' => DB::raw('cw.product_preview_description'),
+                        'p.is_on_web' => DB::raw('cw.product_on_web'),
+                        'p.is_archive' => DB::raw('cw.product_archive'),
+                        'p.date_modified' => DB::raw('cw.product_date_modified'),
+                        'p.special_description' => DB::raw('cw.product_special_description'),
+                        'p.keywords' => DB::raw('cw.product_keywords'),
                     ]);
 
-              $this->clean_description();
-            }
+                echo "cleaning up product table<br>";
 
+               $this->clean_description();
+
+                echo "Importing sku table <br>";
+
+                DB::table('skus as sku')
+                    ->join('illuminearts_sql.cw_skus as cw', 'sku.id', '=', 'cw.sku_id')
+                    ->update([
+                        'sku.price' => DB::raw('cw.sku_price'),
+                        'sku.weight' => DB::raw('cw.sku_weight'),
+                        'sku.stock' => DB::raw('cw.sku_stock'),
+                        'sku.on_web' => DB::raw('cw.sku_on_web'),
+                        'sku.sort' => DB::raw('cw.sku_sort'),
+                        'sku.ship_base' => DB::raw('cw.sku_ship_base'),
+                    ]);
+
+                echo "Importing category1 table <br>";
+
+                DB::table('category1 as cat1')
+                    ->join('illuminearts_sql.cw_categories_primary as cw', 'cat1.id', '=', 'cw.category_id')
+                    ->update([
+                        'cat1.name' => DB::raw('cw.category_name'),
+                        'cat1.archive' => DB::raw('cw.category_archive'),
+                        'cat1.sort' => DB::raw('cw.category_sort'),
+                        'cat1.description' => DB::raw('cw.category_description'),
+                        'cat1.nav' => DB::raw('cw.category_nav'),
+                    ]);
+
+                echo "Importing category2 table <br>";
+
+                DB::table('category2 as cat2')
+                    ->join('illuminearts_sql.cw_categories_secondary as cw', 'cat2.id', '=', 'cw.secondary_id')
+                    ->update([
+                        'cat2.nav' => DB::raw('cw.secondary_name'),
+                        'cat2.archive' => DB::raw('cw.secondary_archive'),
+                        'cat2.sort' => DB::raw('cw.secondary_sort'),
+                        'cat2.description' => DB::raw('cw.secondary_description'),
+                        'cat2.nav' => DB::raw('cw.secondary_nav'),
+                    ]);
+
+                echo "Importing product_category1 table <br>";
+
+                DB::table('category1_product as cp1')
+                    ->join('illuminearts_sql.cw_product_categories_primary as cw', 'cp1.product_id', '=', 'cw.product2category_id')->update
+                    ([
+                        'cp1.product_id' => DB::raw('cw.product2category_product_id'),
+                        'cp1.category1_id' => DB::raw('cw.product2category_category_id'),
+                    ]);
+
+                echo "Importing product_category2 table <br>";
+
+                DB::table('category2_product as cp2')
+                    ->join('illuminearts_sql.cw_product_categories_secondary as cw', 'cp2.product_id', '=', 'cw.product2secondary_id')->update
+                    ([
+                        'cp2.product_id' => DB::raw('cw.product2secondary_product_id'),
+                        'cp2.category2_id' => DB::raw('cw.product2secondary_secondary_id'),
+                    ]);
+
+                echo "All done <br>";
+
+            }
 
         public function xclean_description()
             {
@@ -60,7 +166,7 @@ class ProductUploadController extends Controller
                 $shopify_import = new Shopify_import;
                 $productCounter = 0;
 
-                $products = Product::whereIn('id', [315, 370, 300])->orderBy('product_id')->get();
+                $products = Product::whereDate('date_modified', '2017-12-20')->orderBy('id')->get();
                 // $products = Product::where('is_on_web',TRUE)->take(30)->get();
 
                 // $products = Product::get();
@@ -400,75 +506,86 @@ class ProductUploadController extends Controller
                 }
             }
 
-            public function clean_description()
-    {
-        $products = Product::all();
-        foreach ($products as $product) {
+        public function clean_description()
+            {
+                echo "cleanup 1<br>";
+                $products = Product::get();
+                foreach ($products as $product) {
+                    //     echo "cleanup 1:" . $product->name . "<br>";
 
-            $prefix = '<p class="normal">';
-            $str = $product->description;
-            $clean_str0 = str_replace($prefix, "", $str);
+                    $prefix = '<p class="normal">';
 
-            $prefix = '<p class="smallPrint">';
-            $clean_str11 = str_replace($prefix, "", $clean_str0);
+                    $str = $product->description;
 
-            $prefix = '<div class="normal">';
-            $clean_str12 = str_replace($prefix, "", $clean_str11);
+                    $clean_str0 = str_replace($prefix, "", $str);
 
-            $prefix = '</div>';
-            $clean_str12 = str_replace($prefix, "<br>", $clean_str12);
+                    $prefix = '<p class="smallPrint">';
+                    $clean_str11 = str_replace($prefix, "", $clean_str0);
 
-            $clean_str2 = str_replace("</p>", "<br>", $clean_str12);
-            $clean_str3 = str_replace("<p>", "", $clean_str2);
-            //            echo $product->id . ": " . $clean_str3 . '<br>';
+                    $prefix = '<div class="normal">';
+                    $clean_str12 = str_replace($prefix, "", $clean_str11);
 
-            $line2 = explode("<br>", $clean_str3);
-            $card_type="none";
-            if (array_key_exists(1,$line2)) {
-                //               echo $product->id;
-                $card_type = $line2[1];
-         //       echo $card_type;
-         //       dd($line2);
-                unset($line2[1]);
+                    $prefix = '</div>';
+                    $clean_str12 = str_replace($prefix, "<br>", $clean_str12);
+
+                    $clean_str2 = str_replace("</p>", "<br>", $clean_str12);
+                    $clean_str3 = str_replace("<p>", "", $clean_str2);
+                    //            echo $product->id . ": " . $clean_str3 . '<br>';
+
+                    $line2 = explode("<br>", $clean_str3);
+                    $card_type = "none";
+                    if (array_key_exists(1, $line2)) {
+                        //               echo $product->id;
+                        $card_type = $line2[1];
+                        //       echo $card_type;
+                        //       dd($line2);
+                        unset($line2[1]);
+                    }
+                    /*                    echo "new=" . implode($line2) . "<br>";
+                                        echo "card_type:" . $card_type . "<br>";*/
+
+                    $product->description = implode($line2);
+                    $product->type = $card_type;
+                    $product->save();
+                }
+
+                //       $products = Product::where('type', 'LIKE', '%quot;%')->get();
+                echo "cleanup 2<br>";
+                $products = Product::get();
+                //   dd($products);
+
+                foreach ($products as $p) {
+                    //        echo "cleanup 2:" . $p->name . "<br>";
+
+                    //    [$p->name => str_replace("quot;",'"',$p->name)];
+                    $newname = str_replace("&quot;", '"', $p->name);
+                    $p->name = $newname;
+                    $newname = str_replace("&quot;", '"', $p->description);
+                    $p->description = $newname;
+                    $newname = str_replace("&quot;", '"', $p->type);
+                    $p->type = $newname;
+                    //  dd($newname);
+                    $p->save();
+                }
+
+                echo "cleanup 3<br>";
+                $products = Product::get();
+                //   dd($products);
+                foreach ($products as $p) {
+                    //    [$p->name => str_replace("quot;",'"',$p->name)];
+                    $newname = str_replace("&nbsp;", ' ', $p->name);
+                    $p->name = $newname;
+                    $newname = str_replace("&nbsp;", ' ', $p->description);
+                    $p->description = $newname;
+                    $newname = str_replace("\r\n", '', $p->type); // remove carriage returns
+                    $p->type = $newname;
+                    $newname = str_replace("&nbsp;", ' ', $p->type);
+                    $p->type = $newname;
+                    //  dd($newname);
+                    $p->save();
+                }
+
+                return false;
             }
-            echo "<br>original= " . $product->description;
-            echo "new=".implode($line2)."<br>";
-            echo "card_type:" . $card_type ."<br>";
-
-            $product->description = implode($line2);
-            $product->type = $card_type;
-            $product->save();
-
-     //       $products = Product::where('type', 'LIKE', '%quot;%')->get();
-            $products = Product::get();
-            //   dd($products);
-            foreach ($products as $p) {
-                //    [$p->name => str_replace("quot;",'"',$p->name)];
-                $newname = str_replace("&quot;", '"', $p->name);
-                $p->name = $newname;
-                $newname = str_replace("&quot;", '"', $p->description);
-                $p->description = $newname;
-                $newname = str_replace("&quot;", '"', $p->type);
-                $p->type = $newname;
-                //  dd($newname);
-                $p->save();
-            }
-
-            $products = Product::get();
-            //   dd($products);
-            foreach ($products as $p) {
-                //    [$p->name => str_replace("quot;",'"',$p->name)];
-                $newname = str_replace("&nbsp;", ' ', $p->name);
-                $p->name = $newname;
-                $newname = str_replace("&nbsp;", ' ', $p->description);
-                $p->description = $newname;
-                $newname = str_replace("&nbsp;", ' ', $p->type);
-                $p->type = $newname;
-                //  dd($newname);
-                $p->save();
-            }
-
-        }
-    }
 
     }

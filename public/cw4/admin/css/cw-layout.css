@@ -1,0 +1,1122 @@
+@charset "utf-8";
+@import url("cw-print.css") print;
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http://www.cartweaver.com/legal/eula.cfm
+ Support: http://www.cartweaver.com/support
+ ==========================================================
+ File: cw-layout.css
+ File Date: 2012-12-13
+ Description: Cartweaver Admin Core Stylesheet
+ ==========================================================
+*/
+/* --- reset all of these elements ----*/
+html, body, div, span, object, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, img, ol, ul, li, fieldset, form, label, legend, table, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+/* ------ force scrollbar on non IE browsers to avoid page jump ------- */
+html {
+    margin-bottom: .01px;
+    font-size: 100%;
+    min-height: 100.2%;
+}
+
+/* ---------define body - set base fonts
+ * note: text align center maintains older IE centering ---*/
+body {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    margin: 0px;
+    text-align: center;
+    padding: 0px;
+    line-height: 1;
+}
+
+/* ------ define wrapper, center with auto margins, set base page width
+ * note: text-align:left fixes text after centered body rule above------- */
+#CWadminWrapper {
+    margin: 0 auto;
+    text-align: left;
+    width: 100%;
+    min-width: 960px;
+    max-width: 1440px;
+}
+
+/* ----- admin navigation area -----*/
+#CWadminNav {
+    width: 180px;
+    position: absolute;
+    left: 4px;
+}
+
+#CWadminNav .CWinner {
+    padding: 5px 0 23px 7px;
+}
+
+/* ----- admin nav menu ----- */
+ul#CWadminNavUL {
+    list-style: none;
+    font-size: 14px;
+}
+
+/* top level links */
+ul#CWadminNavUL > li {
+    min-height: 24px;
+    margin: 0 0 0 0;
+    display: block;
+    float: left;
+    width: 180px;
+}
+
+ul#CWadminNavUL > li > a {
+    display: block;
+    padding: 5px 0 5px 32px;
+    text-decoration: none;
+}
+
+ul#CWadminNavUL > li > a.dropLink {
+    height: 24px;
+    width: 30px;
+	color: #666666;
+    padding: 0;
+    margin-right: 9px;
+    float: left;
+}
+
+/* secondary menus */
+ul#CWadminNavUL li ul {
+    list-style: none;
+    display: none;
+}
+
+ul#CWadminNavUL li ul.hoverSub {
+    position: absolute;
+    width: 165px;
+}
+
+ul#CWadminNavUL ul > li > a {
+    font-size: 11px;
+    display: block;
+    padding: 7px 0 7px 12px;
+    text-decoration: none;
+}
+
+/* ---- admin user controls ---- */
+#CWadminDashboard {
+    font-size: 12px;
+    text-align: right;
+    height: 25px;
+    padding: 5px 0;
+}
+
+#CWadminDashboard #loggedInAs {
+    width: 170px;
+    padding-right: 12px;
+}
+
+#CWadminDashboard > a {
+    font-weight: 100;
+    font-size: 13px;
+    line-height: 10px;
+    padding: 2px 6px;
+    margin: 0 0 0 4px;
+    text-decoration: none;
+}
+
+/* ----- main content area ----- */
+#CWadminPage {
+    margin: 0 0 18px 202px;
+    min-height: 560px;
+}
+
+#CWadminPage .CWinner {
+    margin: 15px 15px 10px 10px;
+}
+
+#CWadminContent p {
+    margin-left: 18px;
+}
+
+#CWadminContent p.formText {
+    margin-left: 18px;
+    font-size: 13px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+/* ----- admin widgets ----- */
+div.CWadminHomeWidget {
+    padding: 12px 0 12px 15px;
+    width: 47%;
+    float: left;
+    clear: right;
+    min-height: 320px;
+}
+
+.CWwidgetTable {
+    width: 98%;
+    margin: 8px 0 8px 6px;
+}
+
+.CWwidgetTable td {
+    padding: 11px 0 0 6px;
+    height: 25px;
+    min-height: 25px;
+    font-size: 11px;
+}
+
+#CWadminHomeSearch {
+    font-size: 12px;
+    padding: 0 8px;
+}
+
+#CWadminHomeSearch * {
+    font-size: 11px;
+}
+
+#CWadminHomeSearch form {
+    padding: 7px 1px;
+    min-width: 705px;
+}
+
+#CWadminHomeSearch form label {
+    padding-left: 13px;
+}
+
+/* used to force cell height */
+div.tablePad {
+    float: left;
+    width: .5px;
+    height: 19px;
+}
+
+/* ----- user alerts ----- */
+div#CWadminAlert {
+    margin: 7px 15px 9px 7px;
+}
+
+div.alert, div#CWadminAlert div {
+    padding: 3px 0 3px 8px;
+}
+
+div#CWadminAlert label.warning {
+    display: block;
+    float: none;
+    text-align: left;
+}
+
+a#closeAlertLink {
+    float: right;
+    margin: 0 6px 0 11px;
+}
+
+/* ----- login page ----- */
+#CWadminLoginWrap {
+    margin: 20px auto;
+    width: 288px;
+    text-align: center;
+}
+
+#siteReturnLink {
+    padding: 4px 5px;
+    width: 115px;
+    float: right;
+}
+
+#CWadminLoginWrap table {
+    width: 280px;
+    font-size: 12px;
+}
+
+input#adminUsername, input#adminPassword {
+    width: 170px;
+    margin-right: 4px;
+}
+
+/* ----- admin help icon/link ----- */
+#CWadminHelp {
+    float: right;
+    margin: 0 10px 0 15px;
+}
+
+/* ----- common elements ----- */
+#CWadminPage h1 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding: 0 12px 6px 8px;
+    font-weight: bold;
+}
+
+#CWadminPage h1 span.subHead {
+    font-size: 9px;
+}
+
+h2, #CWadminPage h2 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    padding: 9px 0 6px 0;
+    font-weight: bold;
+}
+
+#CWadminPage h2 a {
+    font-weight: 100;
+    font-size: 10px;
+    padding: 0 11px;
+}
+
+#CWadminPage h3 {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin: 0 5px 0;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+#CWadminPage th > h3 {
+    border-bottom: none;
+}
+
+a img {
+    border: none;
+}
+
+p {
+    font-size: 12px;
+    text-align: left;
+    text-indent: 0;
+    line-height: 12px;
+}
+
+/*Form Elements*/
+form {
+    margin: 0px;
+}
+
+fieldset, fieldset a {
+    padding: 4px;
+}
+
+label {
+    font-size: 12px;
+    text-align: right;
+    font-weight: bold;
+    padding: 0 8px 0 0;
+}
+
+legend {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+input, select, textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    padding: 2px 0 2px 5px;
+}
+
+select {
+    cursor: pointer;
+}
+
+div.error {
+    padding: 4px 11px;
+}
+
+input.formCheckbox, input.formRadio {
+    border: none;
+    background: transparent;
+}
+
+div.formSubCol {
+    width: 46%;
+    float: left;
+}
+
+input[type =
+"checkbox"] {
+    outline: none;
+    border: none;
+}
+
+/*--- changed elements in observed forms ---*/
+table.CWsort th input[type =
+"checkbox"], th input.checkAll {
+    float: left;
+    margin-right: 6px;
+}
+
+a.CWbuttonLink {
+    font-size: 13px;
+    font-weight: 100;
+    padding: 4px 6px;
+}
+
+th + td .CWbuttonLink {
+    float: right;
+    margin: 2px 11px 1px 12px;
+}
+
+h3 + div.CWformButtonWrap {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+div.CWformButtonWrap div.alert {
+    text-align: center;
+}
+
+div.CWformButtonWrap input#updateProduct {
+    margin-left: 110px !important;
+}
+
+div.CWformButtonWrap input#updateDiscount {
+    margin-left: 110px !important;
+}
+
+div.CWformButtonWrap input.updateSKU {
+    margin-left: 65px !important;
+}
+
+div.CWformButtonWrap a.CWbuttonLink {
+    margin: 3px 0 0 16px;
+    float: left;
+}
+
+input.CWformButton, input.submitButton {
+    padding: 3px 4px !important;
+    margin: 3px 3px 0px 3px !important;
+    cursor: pointer;
+}
+
+input.deleteButton {
+    padding: 2px 4px;
+    margin: 3px 3px 0px 3px;
+    cursor: pointer;
+}
+
+td input.CWformButton, td input.deleteButton {
+    margin: 0px 3px 0px 3px;
+}
+
+.CWinfoTable td input.submitButton {
+    margin-top: 11px !important;
+}
+
+/* ------- Add Sku Submit Button ------- */
+input#AddSKUbutton {
+    margin: 5px 0 12px 225px !important;
+}
+
+/* ------- Save SKUs Submit Button ------- */
+input#UpdateSKUbutton, a.SKUviewLink {
+    margin: 5px 12px 12px 0 !important;
+    float: right;
+}
+
+/* ------- Save Upsells,Discount Products/Skus Submit Button ------- */
+input#AddUpsell, input#AddDiscProd {
+    margin: 5px 12px 12px 0 !important;
+    float: right;
+}
+
+/* ------- Delete Upsell Buttons ------- */
+input#DelUpsell, input#DelUpsellRecip, input#DelDiscProduct, input#DelDiscSku {
+    margin: 3px 5px 3px 0 !important;
+    float: right;
+}
+
+/* ------- Add or Update Customer Buttons ------- */
+input#AddCustomer, input#UpdateCustomer {
+    margin: 25px 0 12px 125px !important;
+}
+
+/* ------- Add Category Button ------- */
+input#AddCat {
+    margin: 35px 0 0 5px !important;
+    float: left;
+}
+
+/* ------- Save Category/Option Changes ------- */
+input#UpdateCats, input#UpdateCats2, input#UpdateOptions {
+    margin: 0 15px 0 0 !important;
+    float: right;
+}
+
+table input#UpdateOptionGroup {
+    margin: 12px 15px 8px 0 !important;
+    float: right;
+}
+
+input#UpdateOptionGroup, input#AddOption {
+    margin: 8px 0 8px 25px !important;
+    float: left;
+}
+
+/* ------- Save Shipping/Tax/Misc Records ------- */
+input#SubmitUpdate,
+input.SubmitUpdate {
+    float: right;
+    margin: 0 22px 0 0 !important;
+}
+
+/* ------- Update Tax Rates ------- */
+input#UpdateTaxRates {
+    float: left;
+    margin: 8px 0 8px 25px !important;
+}
+
+/*Tables*/
+table {
+    border-width: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+    margin: 5px;
+}
+
+table.wide {
+    width: 732px !important;
+}
+
+table.wide td > table.wide {
+    width: 98% !important;
+}
+
+table.wider {
+    width: 756px !important;
+}
+
+table.narrow {
+    width: 432px;
+}
+
+table.noBorder, table.noBorder td {
+    border-width: 0px;
+}
+
+table.noBorder table td {
+    border-width: 1px;
+}
+
+table td {
+    vertical-align: top;
+    font-size: 13px;
+    text-align: left;
+    padding: 2px 5px;
+}
+
+table td.decimal {
+    text-align: right;
+    padding-right: 5px;
+}
+
+table td.padTop {
+    padding-top: 10px !important;
+}
+
+table td p {
+    font-size: 12px;
+    margin: 4px 0 6px 0;
+    padding: 0;
+    text-indent: 0;
+}
+
+table tr.dataRow td, #CWadminContent table tr.dataRow td {
+    padding: 5px;
+}
+
+th {
+    padding: 5px 7px 5px 7px;
+    vertical-align: top;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+th + td {
+    padding-left: 8px;
+}
+
+.headerRow th {
+    text-align: left;
+    font-size: 14px;
+    padding-left: 7px;
+}
+
+td .headerRow th {
+    font-size: 12px;
+}
+
+caption {
+    text-align: left;
+}
+
+td.imageCell img {
+    max-height: 50px;
+    max-width: 80px;
+}
+
+/*--- form tables ---*/
+table.CWformTable th.label, table.CWformTable th.label + td {
+    padding: 7px 11px;
+    vertical-align: top;
+}
+
+table.CWformTable th.label {
+    width: 172px;
+    text-align: right;
+    font-size: 13px;
+    line-height: 16px;
+    padding-top: 11px;
+}
+
+body.config-settings table.CWformTable th.label {
+    width: 272px !important;
+}
+
+body table.narrow th.label {
+    width: 123px;
+}
+
+body.ConfigSettings table.CWformTable th.label {
+    width: 50% !important;
+}
+
+table.CWformTable th.label + td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-align: left;
+}
+
+table.CWformTable span.formText {
+    display: block;
+    float: left;
+    margin: 4px 4px 0;
+}
+
+table.CWskuTable {
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+/*--- CWinfo tables --- */
+table.CWinfoTable {
+    margin: 18px 11px 8px !important;
+}
+
+table.CWinfoTable td {
+    padding: 12px 7px;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+/*--- CWsort tables --- */
+table.CWsort {
+    margin: 10px 0 15px 7px;
+    font-size: 8px;
+    width: 97%;
+}
+
+table td table.CWsort {
+    margin: 8px !important;
+    width: 98%;
+}
+
+/* ---- sort headers --- */
+table.CWsort thead tr .header, table.CWsort thead tr th.headerSortDown, table.CWsort thead tr th.headerSortUp {
+    background-image: url(../img/cw-sort-ready.gif);
+    background-repeat: no-repeat;
+    background-position: center left;
+    cursor: pointer;
+    text-align: center;
+    text-align: left;
+    padding-left: 22px;
+}
+
+table.CWsort thead tr th.headerSortUp {
+    background-image: url(../img/cw-sort-asc.gif);
+}
+
+table.CWsort thead tr th.headerSortDown {
+    background-image: url(../img/cw-sort-desc.gif);
+}
+
+table.CWsort thead tr th.noSort {
+    cursor: auto;
+    text-align: left;
+    padding-left: 9px;
+    padding-right: 3px;
+}
+
+body table.CWsort thead tr th.checkHeader {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+table.CWsort thead tr th a {
+    text-decoration: none;
+}
+
+table.CWsort thead tr th a:hover {
+    text-decoration: underline;
+}
+
+/*--- regular cells --- */
+.CWsort td, table.CWsort tbody tr td {
+    padding: 12px 7px 5px 7px;
+    vertical-align: top;
+}
+
+.CWsort td.imageCell {
+    padding: 2px !important;
+}
+
+/* Tabs */
+#CWadminTabWrapper {
+    float: left;
+    margin: 20px 10px;
+    position: relative;
+}
+
+/*----- tab navigation links -----*/
+#CWadminTabWrapper .CWtabList {
+    list-style: none;
+    height: 38px;
+    line-height: 22px;
+    position: absolute;
+    z-index: 1000;
+    display: none;
+}
+
+.CWtabList > li {
+    display: block;
+    float: left;
+}
+
+.CWtabList > li > a {
+    font-size: 13px;
+    font-weight: bold;
+    height: 28px;
+    margin: 0 2px 0 0;
+    padding: 8px 13px 0;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    float: left;
+}
+
+/* ----- tab container ----- */
+.CWtabBox {
+    position: relative;
+    top: 37px;
+    padding: 15px 0;
+    font-size: 12px;
+    line-height: 12px;
+    clear: both;
+    margin-bottom: 15px;
+    min-width: 760px;
+}
+
+/* ----- tab inner content ----- */
+.CWtabBox .tabDiv {
+    display: none;
+    margin: 12px 7px 7px;
+}
+
+/* ----- admin home tabs ----- */
+#CWadminHomeSearch .CWtabBox {
+    position: relative;
+    top: 24px;
+    padding: 0;
+    line-height: 12px;
+    clear: both;
+}
+
+#CWadminHomeSearch #CWadminTabWrapper {
+    width: 96%;
+    min-width: 720px;
+}
+
+#CWadminHomeSearch .CWtabBox .tabDiv {
+    padding: 0 !important;
+}
+
+#CWadminHomeSearch .CWtabList > li > a {
+    height: 18px;
+    padding: 1px 11px 4px;
+    font-size: 11px;
+}
+
+/*----- productForm tabs ----- */
+body.ProductForm .CWtabBox {
+    min-width: 740px;
+}
+
+/* ----- misc layout classes ----- */
+.clear {
+    clear: both;
+}
+
+/* ----- misc presentation classes ----- */
+.alert {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    padding: 6px 4px;
+    margin: 7px 0;
+}
+
+.alert *.warning {
+    font-size: 12px;
+    line-height: 12px;
+    margin: 4px 0;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.dateStamp {
+    font-size: 11px;
+}
+
+table span.descripText {
+    display: block;
+    min-height: 35px;
+    min-width: 240px;
+}
+
+a.descripEditLink {
+    float: left;
+    margin: 12px 18px 25px 4px;
+    width: 16px;
+}
+
+body *.floatLeft {
+    float: left !important;
+}
+
+img.iconLink {
+    cursor: pointer;
+}
+
+.CWformTable img.iconLink {
+    margin: 4px 0 0 11px;
+}
+
+.CWformTable span.fieldLinks {
+}
+
+.pagingLinks {
+    font-size: 12px;
+}
+
+a.productLink, .detailsLink {
+    text-decoration: none;
+}
+
+a.productLink:hover, a.detailsLink:hover {
+    text-decoration: underline;
+}
+
+.pushRight {
+    display: block;
+    width: 124px;
+    float: left;
+    text-align: left;
+}
+
+.rightText {
+    text-align: right;
+}
+
+.smallPrint, .smallprint {
+    font-size: 10px;
+    line-height: 10px;
+    font-weight: 100;
+    padding: 0 12px;
+}
+
+.subText, p.subText {
+    margin: 8px 0;
+    line-height: 14px;
+}
+
+table.CWsort td .smallPrint {
+    padding: 0;
+}
+
+h1 .smallPrint, h2 .smallPrint, h3 .smallPrint {
+    font-size: 13px;
+    line-height: 10px;
+}
+
+div.smallPrint {
+    padding: 6px 6px 0;
+}
+
+th.label div.smallPrint {
+    line-height: 22px;
+    padding: 6px 0;
+}
+
+td div.helpText {
+    display: none;
+    width: 92%;
+    padding: 10px 0;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+th a.showHelpLink {
+    float: left;
+    margin-right: 11px;
+}
+
+tr.helpText {
+    display: none;
+}
+
+tr.helpText p {
+    display: block;
+    padding: 10px 0;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: 100;
+    word-wrap: break-word;
+}
+
+.tableFooter {
+    margin: 12px 0 12px 24px;
+    font-size: 12px;
+}
+
+/* remove link border & hover behavior from linked images */
+a:visited img, a:link img, a:active img, a img, a:hover img {
+    background: none !important;
+    border: none !important;
+    text-decoration: none;
+}
+
+/* remove border from focused elements */:focus, *:focus {
+    outline: 0;
+}
+
+/* ----- admin search forms ----- */
+div.CWadminControlWrap {
+    margin: 5px 15px 3px 7px;
+    font-size: 12px;
+    line-height: 28px;
+}
+
+.pagingLinks {
+    padding: 8px 0;
+    display: block;
+    line-height: 18px;
+}
+
+div.CWadminControlWrap form {
+    display: none;
+}
+
+div.CWadminControlWrap input, div.CWadminControlWrap select {
+    margin: 0 2px 0 4px;
+    line-height: 13px;
+    padding: 1px 0 1px 4px;
+}
+
+div.CWadminControlWrap form label {
+    margin: 0;
+    padding: 0 2px 0 7px;
+}
+
+div.CWadminControlWrap input.date_input_past, div.CWadminControlWrap input.date_input {
+    width: 74px;
+    margin: 0 2px 0 4px;
+}
+
+div.CWadminControlWrap #reportLink {
+    width: 150px;
+    float: right;
+}
+
+div.CWadminControlWrap form {
+    padding: 7px 15px;
+    min-width: 680px;
+}
+
+#showSearchFormLink {
+    float: left;
+    text-align: left;
+    padding: 6px 0 0 1px;
+    display: block;
+    width: 126px;
+}
+
+/* ------- Delete Image Buttons ------- */
+div.productImageControls a {
+    height: 22px;
+    margin-right: 14px;
+}
+
+div.productImageControls .submitButton {
+    margin: 0 40px 0 15px !important;
+    float: right;
+}
+
+/* ----- product dup form ----- */
+#productDup {
+    width: 510px;
+    text-align: right;
+}
+
+#productDup input {
+    margin: 3px 0 5px 0;
+}
+
+/* ----- sku dup form ----- */
+#skuDup {
+    width: 510px;
+    text-align: left;
+    float: left;
+    clear: left;
+    padding: 12px 0 0 15px;
+}
+
+#skuDup input {
+    margin: 3px 0 5px 0;
+}
+
+/* ----- upsell search form ----- */
+#CWadminUpsellSearch {
+    margin: 5px 15px 3px 15px;
+    font-size: 12px;
+    line-height: 28px;
+}
+
+/* ----- product images ----- */
+img.productImagePreview {
+    margin: 8px;
+    max-width: 120px;
+}
+
+div.productImageContent {
+    padding: 9px 0;
+}
+
+div.productImageContent div.imageUpload {
+    display: none;
+}
+
+body#CWimageUploadWrap, body#CWimageSelectWrap {
+    width: 380px;
+    text-align: left;
+}
+
+#CWimageUploadWrap .alert {
+    text-align: left;
+}
+
+#CWimageUploadForm {
+    text-align: center;
+}
+
+#CWimageSelectForm {
+    padding: 8px;
+    font-size: 12px;
+}
+
+body#CWimageSelectWrap p {
+    font-weight: bold;
+    margin: 0 0 5px 7px;
+}
+
+#imageListTable {
+    width: 380px;
+}
+
+#imageListTable td {
+    cursor: pointer;
+}
+
+#imageListTable td a {
+    text-decoration: none !important;
+}
+
+#imageListTableWrap {
+    width: 432px;
+    overflow-y: scroll;
+    height: 135px;
+}
+
+#imageListTable td img {
+    max-width: 40px;
+}
+
+#imgSizeControlUp, #imgSizeControlDown {
+    padding-top: 5px;
+}
+
+/* ----- debug output ----- */
+#CWdebugWrapper {
+    clear: both;
+    font-size: 12px;
+    height: 25px;
+    padding: 5px 22px 12px 25px;
+    margin: 10px 0;
+    text-align: right;
+}
+
+#CWdebugWrapper .inner > *{
+	text-align:left;
+	padding-left:25px;
+}
+
+#CWdebugWrapper p.debugAnchors {
+    padding: 18px 0;
+}
+
+#CWdebugWrapper .debugAnchors a {
+    font-size: 10px;
+    font-weight: 100;
+    margin: 0 0 0 4px;
+    padding: 3px 6px;
+    text-decoration: none;
+}
+
+#CWdebugWrapper a.controlButton {
+    font-size: 13px;
+    line-height: 10px;
+    font-weight: 100;
+    margin: 6px 0 0 7px;
+    padding: 4px 8px;
+    text-decoration: none;
+    float: right;
+}
+
+/* ----- named anchor link to debug section ----- */
+#CWdebugWrapper .debugAnchorLink {
+    padding: 8px 5px;
+}
+
+#CWdebugWrapper h1 {
+    text-align: left;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    border-bottom: 1px solid #DED6C8;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 22px 0 6px 6px;
+}
+
+/* ----- admin help icon/link ----- */
+#CWdebugHelp {
+    float: right;
+    margin: 11px 3px 0 15px;
+}

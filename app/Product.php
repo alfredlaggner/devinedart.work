@@ -48,7 +48,7 @@ class Product extends Model
 
         public function cw_product()
             {
-                return $this->hasOne(Cw_product::class);
+                return $this->hasOne(Cw_product::class, 'product_id');
             }
 
     }

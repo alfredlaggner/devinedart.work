@@ -1,0 +1,391 @@
+@charset "utf-8";
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http://www.cartweaver.com/legal/eula.cfm
+ Support: http://www.cartweaver.com/support
+ ==========================================================
+ File: cw-admin-theme.css
+ File Date: 2012-02-01
+ Description:
+ Cartweaver Admin Theme Stylesheet
+ ==========================================================
+*/
+/* ----- main background and text colors -----*/
+body {
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+/* ----- navigation area styling -----*/
+ul#CWadminNavUL > li {
+    background-repeat: repeat-x;
+    background-position: top left;
+}
+
+ul#CWadminNavUL > li > a {
+    background-position: 4px 50%;
+    background-repeat: no-repeat;
+    border: 1px solid #E0E0E0;
+    border-top: none;
+    color: #36393E;
+    font-weight: bold;
+}
+
+ul#CWadminNavUL > li > a.dropLink {
+    background-color: #F2F2F2;
+    border-right: 1px solid #E0E0E0;
+    background-image: url(img/cw-nav-closed.gif);
+}
+ul#CWadminNavUL > li > a:hover, 
+ul#CWadminNavUL > li.currentSection > a:hover {
+    background-color: #F2F2F2;
+}
+
+ul#CWadminNavUL > li > a.dropLink:hover {
+    background-color: #E3E3E3;
+}
+
+ul#CWadminNavUL > li > a.firstLink {
+    border-top: 1px solid #E0E0E0;
+}
+
+ul#CWadminNavUL > li > a.open {
+    background-image: url(img/cw-nav-open.gif);
+}
+
+ul#CWadminNavUL > li > a.open + a {
+    border-right: 1px solid #E0E0E0;
+}
+
+ul#CWadminNavUL > li.currentSection {
+  background-color: #F2F2F2;
+}
+
+/* ----- highlight links on tab focus -----*/
+
+ul#CWadminNavUL > li > a:focus,
+ul#CWadminNavUL > li > a.dropLink:focus {
+    background-color: #EFEFEF;
+}
+
+/* ----- secondary menus -----*/
+ul#CWadminNavUL li ul {
+    border: 1px solid #E0E0E0;
+    border-top: none;
+    background-color: #FFF;
+}
+
+ul#CWadminNavUL ul > li > a {
+    color: #565551;
+    font-weight: bold;
+    padding: 7px 0 7px 12px;
+    text-decoration: none;
+}
+ul#CWadminNavUL > li > ul > li > a:hover{
+	    background-color: #F2F2F2;
+}
+ul#CWadminNavUL ul > li.currentLink {
+    background-position: bottom;
+}
+
+ul#CWadminNavUL ul > li > a.currentLink {
+    color: #7C776D;
+}
+
+ul#CWadminNavUL ul > li > a:hover, 
+ul#CWadminNavUL ul > li > a.currentLink:hover {
+    background-color: #FFF;
+    background-position: top;
+    color: #232323;
+}
+
+/* ----- highlight links on tab focus -----*/
+ul#CWadminNavUL ul > li > a:focus {
+    background-color: #EFEFEF;
+}
+
+/* ----- admin user controls -----*/
+#CWadminDashboard > a {
+    border:1px solid #E3E3E3;
+    background-color: #e4e9ed;
+	background:url(img/cw-button-bgrd.gif) repeat-x left top;
+    color:#484848 !important;
+    cursor: pointer;
+    padding: 4px !important;
+	text-align:center !important;
+    font-weight: 100;
+	line-height:1.6em;
+}
+
+#CWadminDashboard > a:hover {
+    color:#232323 !important;
+}
+
+/* ----- main content area ----- */
+#CWadminHomeSearch form {
+    background-color: #F2F2F2;
+}
+/* ----- user alerts ----- */
+.confirm, div#CWadminAlert .confirm {
+    color: #363958 !important;
+}
+
+/* ----- login page ----- */
+input#adminUsername, input#adminPassword {
+    border: 1px solid #eee;
+}
+
+/* ----- common elements ----- */
+#CWadminPage h1 {
+    border-bottom: 1px solid #E0E0E0;
+    color: #555;
+}
+#CWadminPage h2 {
+    color: #555;
+	}
+
+#CWadminPage h3 {
+    border-bottom: 1px solid #E0E0E0;
+    color: #555;
+	}
+
+a {
+    color: #363958;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* ----- form elements -----*/
+fieldset, fieldset a {
+    color: #232323;
+}
+
+label.disabled {
+    color: #afafaf;
+}
+
+legend {
+    color: #76685D;
+}
+
+input, select, textarea {
+    color: #232323;
+    background: #FFFFFF;
+}
+
+input[type = "text"], select, textarea {
+    border: 1px solid #E0E0E0;
+}
+
+input.warning, select.warning, textarea.warning {
+    border: 1px solid #CE1C33;
+}
+
+div.error {
+    color: #990000;
+}
+
+/*--- changed elements in observed forms -----*/
+form *.changed, input.changed {
+    border: 1px solid #fff3c4 !important;
+    background-color: #fff5cf !important;
+}
+
+input[type = "checkbox"].changed {
+    outline: 3px solid #fff3c4 !important;
+}
+
+input[type = "checkbox"].warning {
+    outline: 1px solid #CE1C33 !important;
+}
+
+table.CWsort th input[type ="checkbox"], 
+th input.checkAll {
+    outline: 3px solid #F2F2F2 !important;
+	background-color:#F2F2F2 !important;
+}
+
+a.CWbuttonLink {
+    text-decoration: none;
+	min-height:18px;
+	white-space:nowrap;
+	border:1px solid #E3E3E3;
+    font-size: 11px;
+	background:url(img/cw-button-bgrd.gif) repeat-x left top;
+    color:#484848 !important;
+    border:1px solid #E3E3E3;
+    text-align: center !important;
+	cursor:pointer;
+	line-height:1.25em !important;
+	padding: 5px 7px 3px !important;
+	background-color:#e4e4e4;
+	display:inline-block;
+}
+
+	
+
+a.CWbuttonLink:hover {
+    color: #232323 !important;
+}
+
+div.CWformButtonWrap a.deleteButton {
+    background-color: #CDCDCD;
+}
+
+input.CWformButton, input.submitButton {
+    cursor: pointer;
+    border: 1px solid #E3E3E3;
+    color: #484848 !important;
+    font-weight: bold;
+    padding: 3px 4px;
+    background-color: #e5e5e5;
+    text-align: center !important;
+    background: url(img/cw-button-bgrd.gif) repeat-x left top;
+    line-height: 1.6em;
+}
+
+input.deleteButton {
+    background-color: #CDCDCD;
+    border: 1px solid #E0E0E0;
+    color: #232323;
+}
+
+/*-- prevent ie button borders --*/
+input[type = button], 
+input[type = submit] {
+    filter: chroma( color = #000000);
+}
+
+/* ----- tables -----*/
+table {
+    border-color: #E0E0E0;
+}
+
+table td {
+    border: 1px solid #E0E0E0;
+    color: #363958;
+}
+
+table.CWformTable td.hoverCell, 
+table.CWinfoTable td.hoverCell, 
+table.CWsort td.hoverCell, 
+table.CWstripe td.hoverCell {
+    background-color: #fbfbfb !important;
+}
+
+th {
+    border: 1px solid #E0E0E0;
+    background-color: #F2F2F2;
+    color: #555;
+    font-weight: bold;
+}
+
+.headerRow th {
+    color: #555;
+}
+
+caption {
+    color: #1e2061;
+    font-weight: bold;
+}
+
+td.error {
+    color: #990000;
+}
+
+/*--- CWsort tables --- */
+table.CWsort {
+    background-color: #CDCDCD;
+}
+
+/* ---- sort headers --- */
+table.CWsort thead tr th {
+    background-color: #F2F2F2;
+}
+
+table.CWsort thead tr th.headerSortDown,
+table.CWsort thead tr th.headerSortUp {
+    background-color: #E0E0E0;
+}
+
+/*--- regular cells --- */
+.CWsort td, table.CWsort tbody tr td {
+    background-color: #fbfbfb;
+}
+
+/* ----- alternate table rows -----*/
+table tbody tr.CWrowOdd td {
+    background-color: #FFF;
+}
+
+table tbody tr.CWrowEven td {
+    background-color: #FFF;
+
+}
+
+/* ----- tabs -----*/
+.CWtabList > li > a {
+    border: 1px solid #E0E0E0;
+    background-color: #F2F2F2;
+    color: #363958;
+    text-decoration: none;
+}
+
+.CWtabList > li > a:hover {
+    background-color: #fbfbfb;
+}
+
+.CWtabList > li > a.currentTab {
+    border-bottom: 1px solid #FFF;
+    background-color: #FFF;
+}
+
+/* ----- tab container ----- */
+.CWtabBox {
+    border: 1px solid #E0E0E0;
+    background-color: #FFF;
+}
+
+/* ----- misc presentation classes ----- */
+.alert {
+    border: 1px solid #E0E0E0;
+    color: #3774a0;
+    background-color: #E4E9ED;
+}
+
+tr.selectedRow, tr.selectedRow td {
+    background-color: #fff3c4;
+}
+
+/* ----- admin search forms ----- */
+div.CWadminControlWrap {
+    color: #232323;
+}
+
+/* ----- upsell search form ----- */
+#CWadminUpsellSearch {
+    color: #232323;
+}
+
+/* ----- product images ----- */
+body#CWimageSelectWrap tr.currentImg td {
+    background-color: #FFF3C4;
+}
+
+/* ----- debug output ----- */
+#CWdebugWrapper .debugAnchors a {
+    border: 1px solid #E0E0E0;
+    color: #36393E;
+    text-decoration: none;
+}
+
+#CWdebugWrapper a.controlButton {
+    border: 1px solid #E0E0E0;
+    color: #36393E;
+    text-decoration: none;
+}

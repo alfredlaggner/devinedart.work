@@ -11,6 +11,6 @@ class Cw_product extends Model
 
         public function products()
             {
-                $this->hasOne(Product::class);
+                $this->hasOne(Product::class,'id','product_id');
             }
     }

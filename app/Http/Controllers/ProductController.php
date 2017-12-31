@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category2;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
     {
@@ -14,22 +15,48 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
         public function index()
             {
-                $secundary =
-    //            $products = Product::all();
-                $products = Product::where('is_archive','==', '0')->orderby('merchant_product_id')->paginate(15);
+                $products = Product::where('is_archive', '==', '0')->orderby('merchant_product_id')->paginate(15);
                 return view('products',['products' => $products]);
 
             }
 
-            public function secondary(){
+        public function secondary()
+            {
                 $products = Category2::find(1)->cat2;
-               dd($products);
-                foreach($products as $product) {
+                foreach ($products as $product) {
                     echo $product->product_id . "<br>";
                 }
 
+            }
+
+        function getImage($product_id)
+            {
+                $image = [''];
+                $skus = Product::findOrFail($product_id)->images;
+                $imageAddress = "cw4/images/orig/";
+                foreach ($skus as $sku) {
+                    if ($sku->imagetype_id == 3) {
+                        return $imageAddress . $sku->filename;
+                    }
+                }
+                return NULL;
+            }
+
+        function getImage2($product_id)
+            {
+                $image = [''];
+                $skus = Product::findOrFail($product_id)->images;
+                $imageAddress = "http://www.illuminearts.com/cw4/images/orig/";
+                foreach ($skus as $sku) {
+                    if ($sku->imagetype_id == 11) {
+                        return $imageAddress . $sku->filename;
+                    }
+                }
+                return NULL;
             }
 
 

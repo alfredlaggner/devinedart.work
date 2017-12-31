@@ -1,0 +1,37 @@
+@charset "utf-8";
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http://www.cartweaver.com/legal/eula.cfm
+ Support: http://www.cartweaver.com/support
+ ==========================================================
+ File: cw-styles.css
+ File Date: 2012-02-01
+ Description:
+ Cartweaver Text Stylesheet
+ ==========================================================
+*/
+/* ------------ TEXT CLASSES --------------- */
+.strike{
+	text-decoration:line-through;
+	font-style:italic;
+}
+.alertText{
+	color:#bf0000;
+	font-size:12px;
+}
+.confirmText{
+	color:#00439D;
+	font-size:12px;
+}
+.normal{
+	color:#000;
+	font-size:12px;
+	line-height:14px;
+}
+
+span.smallprint, span.smallPrint{
+	font-size:9px;
+}

@@ -1,0 +1,668 @@
+@charset "utf-8";
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http://www.cartweaver.com/legal/eula.cfm
+ Support: http://www.cartweaver.com/support
+ ==========================================================
+ File: cw-core.css
+ File Date: 2012-02-01
+ Description: Cartweaver application stylesheet
+ ==========================================================
+*/
+/*-- import external stylesheet, used in text editors in admin --*/
+@import url(cw-styles.css);
+/*-- import external stylesheet, controls templated theme and layout --*/
+/*-- modify this path as needed for your site's theme css --*/
+@import url(theme/cw-theme.css);
+
+/* -----------LAYOUT / GRAPHICS ---------*/
+/* see cw-theme.css */
+/* -----------TEXT STYLES---------*/
+/* see cwstyles.css */
+
+/* -----------GLOBAL ELEMENTS---------*/
+#CWuserAlert {
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.2em; 
+    text-align: left;
+    padding: 12px 14px;
+    position: absolute;
+    top: 18px;
+    width: 550px;
+}
+
+/* ----------- MISC. CLASSES ---------*/
+.CWcontent .center {
+    text-align: center;
+}
+
+
+.CWclear, .CWcontent .clear {
+	clear: both;
+}
+
+.CWcontent .floatLeft {
+    float: left;
+}
+
+.CWcontent .floatRight {
+    float: right;
+}
+
+.CWcontent .halfLeft {
+    float: left;
+    width: 48%;
+}
+
+.CWcontent .halfRight {
+    float: right;
+    width: 48%;
+}
+
+.CWcontent .headSpace {
+    padding-top: 15px;
+}
+
+.CWcontent .sideSpace {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.CWcontent .left, .CWleft {
+    text-align: left !important;
+}
+
+.CWcontent .right, .CWright {
+    text-align: right !important;
+}
+
+.CWcontent .top40 {
+    margin-top: 40px;
+}
+
+.CWcontent .bottom40 {
+    margin-bottom: 40px;
+}
+
+div.CWalertBox {
+    padding: 8px 14px;
+    margin: 8px 12px 8px 8px;
+}
+
+td div.CWalertBox {
+    margin: 8px 12px 8px 0;
+}
+
+div.CWconfirmBox {
+    padding: 8px 14px;
+    margin: 8px 12px 8px 0;
+}
+tr.CWalertRow td{
+	padding:0 !important;
+	margin:0 !important;
+	}
+/* -----------TABLES---------*/
+.CWcontent table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.CWcontent th, .CWcontent td {
+    vertical-align: top;
+}
+
+table.CWtable {
+}
+
+table.CWtable th {
+    padding: 9px 2px 7px 2px;
+}
+
+table.CWtable thead > tr > th:first-child {
+    padding-left: 8px;
+}
+
+table.CWtable thead > tr > th:last-child {
+    padding-right: 8px;
+}
+table#CWcartProductsTable thead > tr > th:last-child {
+	min-width:75px;
+	}
+table.CWtable tbody td {
+    text-align: left;
+    padding: 10px 2px 2px 2px;
+}
+
+table.CWtable thead td {
+    padding: 0 2px;
+}
+
+table.CWtable thead td.noPad {
+    padding: 0;
+}
+
+table.CWtable th.center, table.CWtable td.center {
+    text-align: center;
+}
+
+table.CWtable th.right, table.CWtable td.right {
+    text-align: right;
+}
+
+table.CWtable td.CWinputCell {
+    padding: 5px 2px;
+}
+
+table.CWtable th input[type =
+"checkbox"], th input.checkAll {
+    float: left;
+    margin-right: 3px;
+}
+
+/* ----------- FORMS ---------*/
+table.CWformTable table.CWformTable + table.CWformTable {
+    margin-top: 14px;
+}
+
+table.CWformTable th, table.CWformTable td {
+    padding: 5px 0 5px 5px;
+}
+
+table.CWformTable h3 {
+    margin: 0 11px 6px 5px;
+}
+
+h3.CWformTitle {
+    margin: 5px 11px;
+}
+
+table.CWformTable h3 .smallPrint {
+    padding-left: 17px;
+}
+
+table.CWformTable h3 .smallPrint input {
+    margin-right: 4px;
+}
+
+/*-------------------------------------*/
+/*           PRODUCT LISTINGS		   */
+/* ------------------------------------*/
+#CWlistings {
+    width: 100%;
+    float: left;
+    margin: 0;
+}
+
+#CWlistings .CWlistingText {
+    padding: 4px 11px 8px 11px;
+}
+
+.CWproductPreviewTitle a.CWlink, .CWproductPreviewTitle a {
+    text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #DAA520;
+	font-size: 1.1em;
+	font-weight: 200;
+	line-height: 1.0em;
+	min-height: 2.1em;	
+}
+
+.CWproductDetailsLink, .CWproductDetailsLink a.CWlink  {
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #DAA520;
+	line-height: 1.7em;
+    margin: 0;
+}
+
+a.CWeditProductLink {
+    float: left;
+    padding: 16px;
+}
+
+.CWproductPreviewPrice {
+    text-align: center;
+	font-weight: normal;
+	font-size: 11px;
+}
+
+.CWwindowPrice {
+    padding: 12px 16px 0 16px;
+}
+
+.CWproductPaging {
+    padding: 2px 0 5px 0;
+	margin: 0;
+    width: 100%;
+    text-align: center;
+	clear:right;
+	margin-bottom: 30px;
+}
+.CWproductPaging p {
+	margin: 0;
+	align: center;
+}
+
+.CWpagingAll {
+    font-size: 11px;
+}
+/* --- breadcrumb nav --- */
+.CWlinksNav + .CWbreadcrumb {
+    width: 98%;
+	text-align: center;
+}
+
+/* ------- product details ------- */
+#CWdetails {
+    padding: 10px 40px;
+    clear: both;
+}
+.CWproductDescription {
+	margin-top: 100px;
+}
+.divider {
+background-color: #CCC;
+font-size: 1px;
+height: 1px;
+overflow-y: hidden;
+line-height: 1px;
+}
+
+/* ------- add to cart form ------- */
+#CWformAddToCart, #CWformAddToCartWindow {
+	width: 340px;
+	float: right;
+}
+
+/* --- add to cart button ---*/
+#CWformAddToCart input.CWformButton, #CWformAddToCartWindow input.CWformButton {
+	margin: 10px 0;
+	float: left;
+}
+
+#CWformAddToCart table + input.CWformButton, #CWformAddToCartWindow table + input.CWformButton {
+    float: left;
+}
+
+#CWformAddToCartWindow div.CWcustomInfo, #CWformAddToCart div.CWcustomInfo {
+    margin: 5px 0 12px 0;
+    font-size: 9px;
+    text-align: left;
+}
+
+form.CWqtyForm div.CWcustomInfo, form.CWaddForm div.CWcustomInfo {
+    margin: 5px 0 12px 0;
+    font-size: .9px;
+    text-align: left;
+}
+
+/*--- add to cart trigger link ---*/
+form.CWqtyForm {
+    margin-top: 10px;
+}
+
+form.CWqtyForm .CWformButton {
+    margin-left: 4px;
+}
+
+/*--- add to cart options window ---*/
+div#CWformWindow {
+    background-color: #FFF;
+    text-align: left;
+    padding: 11px 13px 4px 13px;
+}
+
+div#CWformWindow form {
+    min-height: 120px;
+    min-width: 305px;
+}
+
+.CWproduct a.CWbuttonLink {
+    margin: 11px 0 11px 0;
+}
+
+/* related products */
+#CWdetails .CWproductRelatedProducts {
+	clear:both;
+    padding: 12px 0;
+}
+
+.CWproductRelatedProducts .CWproduct {
+    width: 180px;
+    float: left;
+}
+
+.CWproductRelatedProducts .CWproduct img {
+    max-width: 180px;
+    margin: 8px 0;
+}
+
+.CWproductRelatedProducts .CWproductPreviewTitle {
+	font-size: 11px;
+	font-weight: bold;
+	min-height: 2.1em;
+	max-height: 2.1em;
+	line-height: 1.1em;
+}
+
+.CWproductRelatedProducts .CWproductPrice {
+    font-size: 11px;
+}
+
+.CWproductRelatedProducts .strike {
+    font-size: 10px;
+}
+
+.CWproductRelatedProducts .CWproductPriceDisc {
+    font-size: 12px;
+}
+
+.CWproductRelatedProducts .CWproductPriceAlt {
+    font-size: 10px;
+}
+
+/* ---------------- */
+/*   CART DISPLAY   */
+/* ---------------- */
+#CWcart, #CWconfirm {
+    clear: both;
+}
+
+table#CWcartProductsTable tr.itemRow td {
+    padding: 7px 2px 4px 2px !important;
+}
+table#CWcartProductsTable tr.itemRow td.totalCell{
+	width:100px;
+	}
+
+table#CWcartProductsTable tbody tr.itemRow:first-child td {
+    padding-top: 14px !important;
+}
+
+#CWcartProductsTable th.left {
+    padding-left: 10px;
+}
+
+#CWcartProductsTable .productCell {
+    font-size: 10px;
+    line-height: 1.2em;
+    min-width: 300px;
+}
+
+#CWcartProductsTable .CWcartProdName {
+    font-weight: 900;
+}
+
+#CWcartProductsTable .CWcartSkuName {
+    font-weight: 100;
+}
+
+#CWcartProductTable .CWcartCustomInfo {
+    font-size: 10px;
+}
+
+#CWcartProductsTable .CWcartOption {
+    display: block;
+    margin: 2px 0 0 10px;
+    font-size: 9px;
+    height: 13px;
+}
+
+#CWcartProductsTable .CWcartOption input.custom {
+    font-size: 9px;
+    margin: 0;
+    padding: 0;
+    width: 88px;
+    line-height: 1em;
+}
+
+#CWcartProductsTable .CWcartOptionName {
+    font-weight: 900;
+}
+
+#CWcartProductsTable .CWcartCustomLabel {
+    font-weight: 900;
+}
+
+#CWcartProductsTable div.CWcartImage {
+    float: left;
+    width: 50px;
+}
+
+#CWcartProductsTable div.CWcartImage img {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+#CWcartProductsTable .CWcartItemDetails {
+    float: left;
+    width: 225px;
+    text-align: left;
+}
+
+#CWcartProductsTable td.priceCell, #CWcartProductsTable tr.itemRow td.priceCell {
+    width: 45px;
+    padding-right: 15px !important;
+}
+
+#CWcartProductsTable .qtyCell{
+    width: 85px;
+}
+#CWcartProductsTable .totalAmounts {
+    width: 40px;
+}
+
+#CWcartProductsTable tr.itemRow td.totalCell {
+    padding-right: 15px !important;
+}
+
+#CWcartProductsTable .checkboxCell {
+    width: 75px;
+}
+
+/* - cart totals */
+#CWcartProductsTable .totalCell span.label {
+	text-align:right;
+	margin-right:3px;
+	float:none;
+}
+#CWcartProductsTable .totalCell .CWtotalText{
+float:left;
+width:100%;
+text-align:left;
+display:block;	
+	}
+#CWcartProductsTable .totalCell .CWsubtotalText{
+	font-weight:bold;
+	}
+#CWcartProductsTable .totalCell .CWdiscountText{
+	font-style:italic;
+	}
+span.CWtotalText{
+	padding-left:3px;
+}
+/* - prevent unwanted line breaks (ie) - */
+span.label,
+span.CWtotalText,
+#CWcartProductsTable span.label,
+#CWcartProductsTable .totalCell span.CWtotalText {
+ 	white-space:nowrap; 
+	 display:inline-block;
+	 vertical-align: top;
+}
+/* -------------------- */
+/*   CHECKOUT DISPLAY   */
+/* -------------------- */
+#CWcheckout {
+    clear: both;
+}
+
+#CWcheckoutStepLinks a {
+    text-decoration: none;
+    cursor: default;
+}
+
+#CWcheckoutStepLinks a.currentLink {
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#CWcheckoutStepLinks a.currentLink:hover {
+    text-decoration: underline;
+}
+
+#CWccvExplain {
+    position: absolute;
+    left: 25%;
+    top: 330px;
+    width: 532px;
+	height:255px;
+    background-color: #f2f2f2;
+	border:1px solid #e3e3e3;
+	border-right-width:2px;
+	border-bottom-width:3px;
+    padding: 7px 7px 5px;
+    cursor: pointer;
+}
+
+#CWccvExplain p {
+    font-size: 11px;
+}
+
+#CWccvExplain img {
+    width: 518px;
+    height: 218px;
+    margin-left: 15px;
+}
+
+#CWccvLink {
+    margin: 0 0 0 15px;
+}
+
+#CWccvClose {
+    float: left;
+    margin: 4px 0 0 24px;
+}
+
+/* -------------------- */
+/*   CUSTOMER ACCOUNT   */
+/* -------------------- */
+#CWaccount {
+    clear: both;
+}
+
+table#CWcustomerTable {
+    width: 100%;
+    margin: 10px auto 12px;
+}
+
+table#CWcustomerTable th {
+    padding: 9px 0 5px 5px;
+}
+
+table#CWcustomerTable td {
+    padding-left: 12px;
+    padding-top: 0;
+}
+
+table#CWcustomerTable td.CWimgCell {
+    width: 59px;
+    height: 59px;
+    padding-left: 12px;
+}
+
+table#CWcustomerTable td.CWproductNameCell {
+    width: 223px;
+}
+
+table#CWcustomerTable div.CWcartImage img, #CWaccount .CWrecentProduct img {
+    max-width: 40px;
+    max-height: 40px;
+    margin-left: 12px;
+    float: left;
+}
+
+#CWaccount .CWrecentProduct {
+    clear: both;
+    height: 57px;
+    padding-top: 2px;
+}
+
+#CWaccount .CWrecentProduct > .CWproduct > a.CWlink {
+    padding-left: 4px;
+    width: 59px;
+    float: left;
+}
+
+#CWaccount .CWrecentProduct .CWproductPreviewTitle {
+    float: left;
+    width: 390px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 900;
+    margin-left: 12px;
+    margin-top: 3px;
+}
+
+#CWaccount .CWrecentProduct form.CWqtyForm, #CWaccount .CWrecentProduct form.CWaddForm {
+    float: right;
+    height: 45px;
+    margin: 0;
+    width: 210px;
+}
+
+#CWaccount .CWrecentProduct input.CWformButton {
+    padding: 3px 5px !important;
+    font-size: 11px !important;
+    margin-left: 12px !important;
+}
+#CWaccount .CWrecentProduct .CWalertBox,
+#CWaccount .CWrecentProduct .CWconfirmBox{
+	width:210px;
+	float:right;
+}
+
+/* ----- debug output ----- */
+#CWdebugWrapper {
+    font-size: 12px;
+    min-height: 225px;
+    margin: 10px 0;
+    text-align: left;
+    float: left;
+    width: 100%;
+    clear: both;
+}
+
+#CWdebugWrapper .inner {
+    background-color: #FFF;
+    padding: 15px 50px;
+}
+
+#CWdebugWrapper h1 {
+    color: #4444CC;
+    font-size: 16px;
+    margin: 11px 12px;
+}
+
+#CWdebugWrapper p.debugAnchors {
+    padding: 0;
+}
+
+#CWdebugWrapper .debugAnchors a {
+    font-size: 10px;
+    font-weight: 100;
+    margin: 0 0 0 4px;
+    padding: 3px 6px;
+}
+
+#CWdebugWrapper a.controlButton {
+    font-size: 13px;
+    line-height: 1em;
+    margin: 6px 0 0 0;
+    padding: 4px 8px;
+    float: left;
+}

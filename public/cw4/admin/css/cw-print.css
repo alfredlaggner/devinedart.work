@@ -1,0 +1,103 @@
+/*
+ ==========================================================
+ Application: Cartweaver 4 ColdFusion
+ Copyright 2002 - 2012, All Rights Reserved
+ Developer: Application Dynamics, Inc. | Cartweaver.com
+ Licensing: http: //www.cartweaver.com/legal/eula.cfm
+ Support: http: //www.cartweaver.com/support
+ ==========================================================
+ File: cw-print.css
+ File Date: 2012-06-23
+ Description: 
+ Cartweaver Admin Print Stylesheet
+ ==========================================================
+*/
+
+/* --- fix page layout ----*/
+#CWadminWrapper {
+	width: 100%;
+	min-width: auto;
+	max-width: auto;
+}
+
+#CWadminPage {
+	margin: 10px !important;
+}
+
+/* --- hide unwanted stuff ----*/
+#CWadminNav {
+	display: none !important;
+}
+
+#CWadminAlert {
+	display: none !important;
+}
+
+#CWadminDashboard {
+	display: none !important;
+}
+
+div.CWadminControlWrap{
+	display: none !important;
+}
+
+html body a{
+	text-decoration: none !important;
+}
+ 
+/* --- order details / packing slip ---*/
+body.order-details h1,
+body.order-details h2,
+body.order-details h3,
+body.order-details #CWadminTabWrapper ul.CWtabList,
+body.order-details #CWadminTabWrapper div.CWformButtonWrap,
+body.order-details #CWadminTabWrapper #tab1,
+body.order-details #CWadminTabWrapper #tab3,
+body.order-details span.infoLabel {
+	display: none !important;
+}
+
+body.order-details #CWadminTabWrapper {
+float: none !important;
+margin: 0 !important;
+}
+body.order-details table,
+body.order-details table.wide{
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+body.order-details div.CWtabBox,
+body.order-details div.tabDiv {
+	display: block !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+body.order-details tr.headerRow th{
+	border-left: none;
+	border-right: none;
+}
+
+body.order-details tr.subTotalRow td,
+body.order-details tr.subTotalRow th{
+		padding-top:25px !important;
+}
+body.order-details tr.totalRow td,
+body.order-details tr.totalRow th{
+		font-size:15px !important;
+}
+
+body.order-details table td p{
+	margin-left: 0 !important;
+	padding-left: 0 !important;
+	font-size: 15px !important;
+	line-height: 22px !important;
+}
+
+body.order-details table tr.dataRow th,
+body.order-details table td,
+body.order-details table,
+body.order-details div.CWtabBox {
+	border: none !important;
+	}
