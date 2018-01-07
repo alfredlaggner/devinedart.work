@@ -84,6 +84,21 @@ return [
             'engine' => null,
         ],
 
+        'wholesale' => [
+            'driver' => 'mysql',
+            'host' => env('DB_WHOLSALE_HOST', '127.0.0.1'),
+            'port' => env('DB_WHOLSALE_PORT', '3306'),
+            'database' => env('DB_WHOLSALE_DATABASE', 'forge'),
+            'username' => env('DB_WHOLSALE_USERNAME', 'forge'),
+            'password' => env('DB_WHOLSALE_PASSWORD', ''),
+            'unix_socket' => env('DB_WHOLSALE_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

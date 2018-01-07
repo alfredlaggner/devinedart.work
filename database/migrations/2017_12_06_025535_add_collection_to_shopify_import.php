@@ -14,7 +14,11 @@ class AddCollectionToShopifyImport extends Migration
     public function up()
     {
         Schema::table('shopify_imports', function (Blueprint $table) {
-            $table->string('Collection');
+            $table->integer('old_product_id');
+            $table->integer('old_product_id');
+            $table->integer('old_product_id');
+
+
         });
     }
 

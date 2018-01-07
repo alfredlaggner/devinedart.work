@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
         protected $fillable = [
+            'product_id',
             'name',
             'description',
             'type',
@@ -28,27 +29,34 @@ class Product extends Model
 
         public function cat1()
             {
-                return $this->belongsToMany(Category1::class)->withTimestamps();
+                return $this->hasOne(Category1::class,'category1_id','category1_id' );
             }
 
         public function cat2()
             {
-                return $this->belongsToMany(Category2::class)->withTimestamps();
+                return $this->hasOne(Category2::class,'category2_id','category2_id' );
+            }
+
+        public function oldcat2()
+            {
+                return $this->belongsToMany(Category2::class,'category2_product','category2_id','product_id')->withTimestamps();
             }
 
         public function skus()
             {
-                return $this->hasMany(Sku::class);
+                return $this->hasMany(Sku::class,'product_id','product_id');
             }
 
         public function images()
             {
-                return $this->hasMany(Product_image::class);
+                return $this->hasMany(Product_image::class,NIL,'product_id');
             }
 
         public function cw_product()
             {
-                return $this->hasOne(Cw_product::class, 'product_id');
+                return $this->hasOne(Cw_product::class, 'product_id','product_id');
             }
+
+
 
     }

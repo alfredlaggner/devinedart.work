@@ -6,8 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sku extends Model
 {
-        protected $fillable = ['size'];
         protected $table = 'skus';
+
+        protected $fillable = [
+            'merchant_sku_id',
+            'size',
+            'product_id',
+            'price',
+            'weight',
+            'stock',
+            'on_web',
+            'sort',
+            'alt_price',
+            'ship_base',
+        ];
 
         public function product()
             {

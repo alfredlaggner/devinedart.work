@@ -4,14 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Cw_product;
+use App\Product;
+use App\Product_wholesale;
+use App\Sku;
+use App\Cw_sku;
+use App\Category1;
 use App\Category2;
 use App\Category1_product;
 use App\Category2_product;
-use App\Cw_product;
-use App\Product;
-use App\Sku;
+use App\Product_image;
+use App\Cw_categories_primary;
+use App\Cw_categories_secondary;
+use App\Cw_product_categories_primary;
+use App\Cw_product_categories_secondary;
+use App\Cw_product_image;
 use App\Shopify_import;
-use Maatwebsite\ Excel\ Facades\ Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 ini_set('max_execution_time', 180 * 2); //6 minutes
 
@@ -21,15 +31,12 @@ class ProductUploadController extends Controller
 
         public function test()
             {
-                $product = Product::get();
-                //         $product = Product::get();
-                //          dd($product);
-                foreach ($product as $p) {
-                    $p->image = $this->getProductImage($p->id);
-                    echo $p->image . "<br>";
-                    $p->update();
-                }
+                $cw_product = Cw_product::first();
+                echo $cw_product->product_name;
+                die();
+
             }
+
         function getProductImage($product_id)
             {
                 $image = [''];
@@ -44,9 +51,10 @@ class ProductUploadController extends Controller
 
         public function org_test()
             {
-                $product = Product::whereDate('date_modified','2017-12-20')->get();
+                $product = Product::whereDate('date_modified', '<=', '2017-12-20')->get();
                 //         $product = Product::get();
                 //          dd($product);
+
                 foreach ($product as $p) {
                     $p->name = $p->cw_product->product_name;
                     echo $p->name . "<br>";
@@ -61,89 +69,234 @@ class ProductUploadController extends Controller
                 }
             }
 
-        public function original_2_import()
+
+        function getCat2()
             {
 
-                /*import from original database*/
+                $query = DB::table('products')
+                    ->join('cw_product_categories_secondary', 'product_id', '=', 'product2secondary_product_id')
+                    ->select('products.*', 'cw_product_categories_secondary.product2secondary_secondary_id')
+                    ->update(['category2_id' => 'cw_product_categories_secondary.product2secondary_secondary_id']);
+                /*                foreach ($query as $row)
+                                {
+                                    $category2_id = $row->product2secondary_secondary_id;
+                                    update($row->category2_id = $category2_id);
+                                }*/
+            }
+
+        public function update_wholesale()
+            {
+                $products = Product::get();
+
+                foreach ($products as $p) {
+
+                    Product_wholesale::updateOrcreate(
+                        [
+                            'product_id' => $p->id,
+                            'name' => $p->name,
+                            'uri' => str_replace(' ', '_', $p->name) . "_" . $p->id,
+                            'description' => $p->description,
+                            'price' => $this->getPrice($p->id, 0),
+                            'old_price' => $this->getPrice($p->id, 0),
+                            'category_id' => 0,
+                            'special' => false,
+                            'new' => false,
+                            'order' => $p->sort,
+                            'type' => $p->type,
+                            'merchant_product_id' => $p->merchant_product_id,
+                            'preview_description' => $p->preview_description,
+                            'is_on_web' => $p->is_on_web,
+                            'is_archive' => $p->is_archive,
+                            'is_ship_charge' => $p->is_ship_charge,
+                            'tax_group_id' => $p->tax_group_id,
+                            'date_modified' => $p->date_modified,
+                            'special_description' => $p->special_description,
+                            'keywords' => $p->keywords,
+                            'out_of_stock_message' => $p->out_of_stock_message,
+                            'custom_info_label' => $p->custom_info_label,
+                        ]);
+
+                }
+            }
+
+        public function original_2_import()
+            {
                 echo "Importing product table <br>";
-     //          $this->product_import();
-                DB::table('products as p')
-                    ->join('illuminearts_sql.cw_products as cw', 'p.id', '=', 'cw.product_id')
-                    ->update([
-                        'p.description' => DB::raw('cw.product_description'),
-                        'p.name' => DB::raw('cw.product_name'),
-                        'p.preview_description' => DB::raw('cw.product_preview_description'),
-                        'p.is_on_web' => DB::raw('cw.product_on_web'),
-                        'p.is_archive' => DB::raw('cw.product_archive'),
-                        'p.date_modified' => DB::raw('cw.product_date_modified'),
-                        'p.special_description' => DB::raw('cw.product_special_description'),
-                        'p.keywords' => DB::raw('cw.product_keywords'),
-                    ]);
 
-                echo "cleaning up product table<br>";
+                DB::table('products')->truncate();
 
-               $this->clean_description();
+                $cw_products = Cw_Product::get();
 
-                echo "Importing sku table <br>";
+                foreach ($cw_products as $cw) {
 
-                DB::table('skus as sku')
-                    ->join('illuminearts_sql.cw_skus as cw', 'sku.id', '=', 'cw.sku_id')
-                    ->update([
-                        'sku.price' => DB::raw('cw.sku_price'),
-                        'sku.weight' => DB::raw('cw.sku_weight'),
-                        'sku.stock' => DB::raw('cw.sku_stock'),
-                        'sku.on_web' => DB::raw('cw.sku_on_web'),
-                        'sku.sort' => DB::raw('cw.sku_sort'),
-                        'sku.ship_base' => DB::raw('cw.sku_ship_base'),
-                    ]);
+                    Product::updateOrcreate(
+                        [
+                            'product_id' => $cw->product_id,
+                            'name' => $cw->product_name,
+                            'description' => $cw->product_description,
+                            'merchant_product_id' => $cw->product_merchant_product_id,
+                            'preview_description' => $cw->product_preview_description,
+                            'sort' => $cw->product_sort,
+                            'is_on_web' => $cw->product_on_web,
+                            'is_archive' => $cw->product_archive,
+                            'is_ship_charge' => $cw->product_is_ship_charge,
+                            'tax_group_id' => $cw->product_tax_group_id,
+                            'date_modified' => $cw->product_date_modified,
+                            'special_description' => $cw->product_special_description,
+                            'keywords' => $cw->product_keywords,
+                            'out_of_stock_message' => $cw->product_out_of_stock_message,
+                            'custom_info_label' => $cw->product_custom_info_label,
+                            //             'category2_id' => $this->getCat2($cw->product_id),
+                        ]);
+
+                    $query = DB::table('products')
+                        ->Join('cw_product_categories_primary', 'product_id', '=', 'product2category_product_id')
+                        ->select('products.*', 'cw_product_categories_primary.*')
+                        ->get();
+                    foreach ($query as $row) {
+                        DB::table('products')
+                            ->where('id', $row->id)
+                            ->update(['category1_id' => $row->product2category_category_id]);
+                    };
+
+                    $query = DB::table('products')
+                        ->Join('cw_product_categories_secondary', 'product_id', '=', 'product2secondary_product_id')
+                        ->select('products.*', 'cw_product_categories_secondary.*')
+                        ->get();
+                    foreach ($query as $row) {
+                        DB::table('products')
+                            ->where('id', $row->id)
+                            ->update(['category2_id' => $row->product2secondary_secondary_id]);
+                    };
+
+
+                }
+
+
+                echo "Importing images <br>";
+
+                DB::table('product_images')->truncate();
+
+                $cw_product_images = Cw_product_image::get();
+
+                foreach ($cw_product_images as $cw) {
+
+                    Product_image::updateOrcreate(
+                        [
+                            'product_id' => $cw->product_image_product_id,
+                            'image_id' => $cw->product_image_id,
+                            'imagetype_id' => $cw->product_image_imagetype_id,
+                            'filename' => $cw->product_image_filename,
+                            'sortorder' => $cw->product_image_sortorder,
+                            'caption' => $cw->product_image_caption,
+                        ]);
+                }
+
 
                 echo "Importing category1 table <br>";
 
-                DB::table('category1 as cat1')
-                    ->join('illuminearts_sql.cw_categories_primary as cw', 'cat1.id', '=', 'cw.category_id')
-                    ->update([
-                        'cat1.name' => DB::raw('cw.category_name'),
-                        'cat1.archive' => DB::raw('cw.category_archive'),
-                        'cat1.sort' => DB::raw('cw.category_sort'),
-                        'cat1.description' => DB::raw('cw.category_description'),
-                        'cat1.nav' => DB::raw('cw.category_nav'),
-                    ]);
+                DB::table('category1')->truncate();
+
+                $cw_categories_primary = Cw_categories_primary::get();
+
+                foreach ($cw_categories_primary as $cw) {
+
+                    Category1::updateOrcreate(
+                        [
+                            'category1_id' => $cw->category_id,
+                            'name' => $cw->category_name,
+                            'archive' => $cw->category_archive,
+                            'sort' => $cw->category_sort,
+                            'description' => $cw->category_description,
+                            'nav' => $cw->category_nav
+                        ]);
+                }
 
                 echo "Importing category2 table <br>";
 
-                DB::table('category2 as cat2')
-                    ->join('illuminearts_sql.cw_categories_secondary as cw', 'cat2.id', '=', 'cw.secondary_id')
-                    ->update([
-                        'cat2.nav' => DB::raw('cw.secondary_name'),
-                        'cat2.archive' => DB::raw('cw.secondary_archive'),
-                        'cat2.sort' => DB::raw('cw.secondary_sort'),
-                        'cat2.description' => DB::raw('cw.secondary_description'),
-                        'cat2.nav' => DB::raw('cw.secondary_nav'),
-                    ]);
+                DB::table('category2')->truncate();
 
-                echo "Importing product_category1 table <br>";
+                $cw_categories_secondary = Cw_categories_secondary::get();
 
-                DB::table('category1_product as cp1')
-                    ->join('illuminearts_sql.cw_product_categories_primary as cw', 'cp1.product_id', '=', 'cw.product2category_id')->update
-                    ([
-                        'cp1.product_id' => DB::raw('cw.product2category_product_id'),
-                        'cp1.category1_id' => DB::raw('cw.product2category_category_id'),
-                    ]);
+                foreach ($cw_categories_secondary as $cw) {
 
-                echo "Importing product_category2 table <br>";
+                    Category2::updateOrcreate(
+                        [
+                            'category2_id' => $cw->secondary_id,
+                            'name' => $cw->secondary_name,
+                            'archive' => $cw->secondary_archive,
+                            'sort' => $cw->secondary_sort,
+                            'description' => $cw->secondary_description,
+                            'nav' => $cw->secondary_nav
+                        ]);
+                }
 
-                DB::table('category2_product as cp2')
-                    ->join('illuminearts_sql.cw_product_categories_secondary as cw', 'cp2.product_id', '=', 'cw.product2secondary_id')->update
-                    ([
-                        'cp2.product_id' => DB::raw('cw.product2secondary_product_id'),
-                        'cp2.category2_id' => DB::raw('cw.product2secondary_secondary_id'),
-                    ]);
+
+                echo "Importing product category1 table <br>";
+
+                DB::table('category1_product')->truncate();
+
+                $cw_product_categories_primary = Cw_product_categories_primary::get();
+
+                foreach ($cw_product_categories_primary as $cw) {
+
+                    Category1_product::updateOrcreate(
+                        [
+                            'product_id' => $cw->product2category_product_id,
+                            'category1_id' => $cw->product2category_category_id
+                        ]);
+                }
+
+                echo "Importing product category2 table <br>";
+
+                DB::table('category2_product')->truncate();
+
+                $cw_product_categories_secondary = Cw_product_categories_secondary::get();
+
+                foreach ($cw_product_categories_secondary as $cw) {
+
+                    Category2_product::updateOrcreate(
+                        [
+                            'product_id' => $cw->product2secondary_product_id,
+                            'category2_id' => $cw->product2secondary_secondary_id,
+                        ]);
+                }
+
+
+                echo "Importing sku table <br>";
+
+                DB::table('skus')->truncate();
+
+                $cw_sku = Cw_Sku::get();
+
+                foreach ($cw_sku as $cw) {
+                    Sku::updateOrcreate(
+                        [
+                            'product_id' => $cw->sku_product_id,
+                            'alt_price' => $cw->sku_alt_price,
+                            'price' => $cw->sku_price,
+                            'weight' => $cw->sku_weight,
+                            'stock' => $cw->sku_stock,
+                            'on_web' => $cw->sku_on_web,
+                            'sort' => $cw->sku_sort,
+                            'ship_base' => $cw->sku_ship_base,
+                            'merchant_sku_id' => $cw->sku_merchant_sku_id,
+                            'size' => $cw->sku_size,
+                        ]);
+                }
+
+                /*import from original database*/
+
+                echo "cleaning up product table<br>";
+
+                $this->clean_description();
 
                 echo "All done <br>";
 
             }
 
-        public function xclean_description()
+        public
+        function xclean_description()
             {
 
                 //    $products = Product::where('name', 'LIKE', '%quot;%')->update(['name' => str_replace("quot;",'"','name')]);
@@ -166,7 +319,7 @@ class ProductUploadController extends Controller
                 $shopify_import = new Shopify_import;
                 $productCounter = 0;
 
-                $products = Product::whereDate('date_modified', '2017-12-20')->orderBy('id')->get();
+                $products = Product::whereDate('date_modified', '>=', '2017-12-20')->orderBy('id')->get();
                 // $products = Product::where('is_on_web',TRUE)->take(30)->get();
 
                 // $products = Product::get();
@@ -193,7 +346,7 @@ class ProductUploadController extends Controller
                         $shopify_import->updateOrCreate($this->ImageLines($product, $imageLines, $i));
                     }
                 }
-                $this->export_csv();
+                //         $this->export_csv();
                 dd('Done with ' . $productCounter);
                 return;
             }
@@ -247,13 +400,15 @@ class ProductUploadController extends Controller
 
         function ProductLine($product, $i)
             {
+        //        echo $product->product_id . "<br>";
+       //         dd($product->images->where('imagetype_id',11));
                 $productLine = [
                     'product_id' => $product->id,
-                    'Handle' => str_replace(' ', '_', $product->name) . "_" . $product->id,
+                    'Handle' => str_replace(' ', '_', str_replace('"','',strtolower ($product->name))) . "_" . $product->id,
                     'Title' => $product->name,
                     'Body' => $product->description,
                     'Vendor' => NULL,
-                    'Type' => $this->getCategory2($product->id),
+                    'Type' =>$product->cat2->name, //$this->getCategory2($product->category2_id),
                     'Tags' => $product->keywords,
                     'Published' => $product->is_on_web,
                     'Option1 Name' => $this->getSize($product->id, $i) ? 'Size' : 'Title',
@@ -282,7 +437,7 @@ class ProductUploadController extends Controller
                     'Variant Tax Code' => NULL,
                     'SEO Title' => $product->name,
                     'SEO Description' => $product->description,
-                    'Collection' => $this->getCategory1($product->id)
+                    'Collection' =>$product->cat1->name // $this->getCategory1($product->category1_id)
                 ];
                 //      dd($productLine);
 
@@ -378,7 +533,7 @@ class ProductUploadController extends Controller
         function getImage($product_id)
             {
                 $image = [''];
-                $skus = Product::findOrFail($product_id)->images;
+                $skus = Product::findOrfail($product_id)->images;
                 $imageAddress = "http://www.illuminearts.com/cw4/images/orig/";
                 foreach ($skus as $sku) {
                     if ($sku->imagetype_id == 3) {
@@ -475,16 +630,26 @@ class ProductUploadController extends Controller
         function getCategory1($product_id)
             {
                 $products = Product::findOrFail($product_id)->cat1;
+                echo $product_id;
+                dd($products);
                 foreach ($products as $product) {
                     return $product->name;
                 }
             }
 
-        function getCategory2($product_id)
+/*        function getCategory1($category1_id)
             {
-                $products = Product::findOrFail($product_id)->cat2;
-                foreach ($products as $product) {
-                    return $product->name;
+                $category2 = Category1::where('category1_id',$category1_id);
+                foreach ($category2 as $cat) {
+                    return $cat->name;
+                }
+            }*/
+        function getCategory2($category2_id)
+            {
+                //         dd($product_id);
+                $category2 = Category1::where('category2_id',$category2_id);
+                foreach ($category2 as $cat) {
+                    return $cat->name;
                 }
             }
 
@@ -506,7 +671,8 @@ class ProductUploadController extends Controller
                 }
             }
 
-        public function clean_description()
+        public
+        function clean_description()
             {
                 echo "cleanup 1<br>";
                 $products = Product::get();
@@ -525,6 +691,14 @@ class ProductUploadController extends Controller
                     $prefix = '<div class="normal">';
                     $clean_str12 = str_replace($prefix, "", $clean_str11);
 
+                    $prefix = '<span class="normal">';
+                    $clean_str12 = str_replace($prefix, "", $clean_str11);
+
+                    $prefix = '</span>';
+                    $clean_str12 = str_replace($prefix, "", $clean_str11);
+
+
+
                     $prefix = '</div>';
                     $clean_str12 = str_replace($prefix, "<br>", $clean_str12);
 
@@ -533,7 +707,7 @@ class ProductUploadController extends Controller
                     //            echo $product->id . ": " . $clean_str3 . '<br>';
 
                     $line2 = explode("<br>", $clean_str3);
-                    $card_type = "none";
+                    $card_type = "NULL";
                     if (array_key_exists(1, $line2)) {
                         //               echo $product->id;
                         $card_type = $line2[1];

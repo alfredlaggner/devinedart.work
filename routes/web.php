@@ -23,15 +23,18 @@ Route::get('/import/original',['as' =>'original_upload', 'uses' => 'ProductUploa
 
 Route::get('/import/customers',['as' =>'customer_upload', 'uses' => 'CustomerUploadController@customers_2_shopify']);
 
+Route::get('/import/wholesale','ProductUploadController@update_wholesale');
+
 Route::get('/secprod', 'ProductController@secondary');
 
 Route::resource('products', 'ProductController');
+
 Route::resource('/secondary', 'CategorySecondaryController');
 
 Auth::routes();
 
-
-Route::get('makeupload','ProductUploadController@export_csv');
+Route::get('makecsv','ProductUploadController@export_csv');
 Route::get('/cleanup','ProductUploadController@clean_description');
 Route::get('/cleanup2','ProductUploadController@makeSkuSize');
 Route::get('/test','ProductUploadController@test');
+
