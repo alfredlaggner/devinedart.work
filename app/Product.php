@@ -32,14 +32,9 @@ class Product extends Model
                 return $this->hasOne(Category1::class,'category1_id','category1_id' );
             }
 
-        public function cat2()
+        public function cat22()
             {
                 return $this->hasOne(Category2::class,'category2_id','category2_id' );
-            }
-
-        public function oldcat2()
-            {
-                return $this->belongsToMany(Category2::class,'category2_product','category2_id','product_id')->withTimestamps();
             }
 
         public function skus()

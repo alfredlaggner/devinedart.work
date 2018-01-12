@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product_wholesale extends Model
-    {
+class WholesaleProduct extends Model
+{
         protected $connection = 'wholesale';
         protected $table = 'products';
         protected $guarded = ['id'];
@@ -40,4 +40,4 @@ class Product_wholesale extends Model
             {
                 $this->hasOne(Product::class);
             }
-    }
+}

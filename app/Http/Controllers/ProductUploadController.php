@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use App\Cw_product;
 use App\Product;
-use App\Product_wholesale;
+use App\WholesaleProduct;
+use App\WholesalePhoto;
+use App\WholesaleInventory;
 use App\Sku;
 use App\Cw_sku;
 use App\Category1;
@@ -72,7 +76,6 @@ class ProductUploadController extends Controller
 
         function getCat2()
             {
-
                 $query = DB::table('products')
                     ->join('cw_product_categories_secondary', 'product_id', '=', 'product2secondary_product_id')
                     ->select('products.*', 'cw_product_categories_secondary.product2secondary_secondary_id')
@@ -86,15 +89,48 @@ class ProductUploadController extends Controller
 
         public function update_wholesale()
             {
+                Schema::connection("wholesale")->drop('products');
+
+                Schema::connection("wholesale")->create('products',
+                    function (Blueprint $table) {
+                        $table->integer('tmp_product_id')->nullable();
+                        $table->string('name', 255)->nullable();
+                        $table->string('uri', 255)->nullable();
+                        $table->text('description')->nullable();
+                        $table->float('price', 8, 2)->nullable();
+                        $table->float('old_price', 8, 2)->nullable();
+                        $table->integer('category_id')->nullable();
+                        $table->integer('special')->nullable();
+                        $table->integer('new')->nullable();
+                        $table->integer('order')->nullable();
+                        $table->text('type')->nullable();
+                        $table->string('merchant_product_id', 255)->nullable();
+                        $table->text('preview_description')->nullable();
+                        $table->integer('sort')->nullable();
+                        $table->boolean('is_on_web')->nullable();
+                        $table->boolean('is_archive')->nullable();
+                        $table->boolean('is_ship_charge')->nullable();
+                        $table->integer('tax_group_id')->nullable();
+                        $table->date('date_modified')->nullable();
+                        $table->string('special_description', 255)->nullable();
+                        $table->text('keywords')->nullable();
+                        $table->text('out_of_stock_message')->nullable();
+                        $table->text('custom_info_label')->nullable();
+                        $table->timestamps();
+                    });
+
                 $products = Product::get();
 
                 foreach ($products as $p) {
 
-                    Product_wholesale::updateOrcreate(
+                    WholesaleProduct::FirstOrcreate(
                         [
-                            'product_id' => $p->id,
+                            //    'id' => $p->product_id,
+                            'tmp_product_id' => $p->product_id,
                             'name' => $p->name,
-                            'uri' => str_replace(' ', '_', $p->name) . "_" . $p->id,
+                            'uri' => str_replace(' ', '-',
+                                str_replace('"', '',
+                                    strtolower(rtrim($p->name)))),
                             'description' => $p->description,
                             'price' => $this->getPrice($p->id, 0),
                             'old_price' => $this->getPrice($p->id, 0),
@@ -115,17 +151,93 @@ class ProductUploadController extends Controller
                             'out_of_stock_message' => $p->out_of_stock_message,
                             'custom_info_label' => $p->custom_info_label,
                         ]);
+                }
+
+                Schema::connection("wholesale")->table('products',
+                    function (Blueprint $table) {
+
+                        $table->renameColumn('tmp_product_id', 'id')->nullable(false)
+                            ->autoIncrement();
+                        $table->primary('id');
+
+                    });
+
+
+
+                DB::connection("wholesale")->table('photos')->truncate();
+                $photos = Product_image::get();
+
+                foreach ($photos as $p) {
+
+                    WholesalePhoto::Create(
+                        [
+                            'product_id' => $p->product_id,
+                            'name' => $p->filename,
+                            'original_name' => $p->filename,
+                            'order' => 0,
+                            'default' => 0,
+                            'imagetype_id' => $p->imagetype_id,
+                            'caption' => $p->caption,
+                        ]);
 
                 }
+                $photos = ['default' => 1, 'order' => 1];
+                WholesalePhoto::where('imagetype_id', '=', 3)->update($photos);
+
+                $photos = ['default' => 0, 'order' => 2];
+                WholesalePhoto::where('imagetype_id', '=', 11)->update($photos);
+
+
+                echo "done 1";
+
+
+                $photos = WholesalePhoto::where('imagetype_id', '=', 11)->get();
+
+                foreach ($photos as $p) {
+                    echo $p->imagetype_id . "<br>";
+
+                    $p->default = 0;
+                    $p->order = 2;
+                    $p->save();
+                };
+
+                $photos = WholesalePhoto::where('order', '=', 0)->get();
+
+                foreach ($photos as $p) {
+
+                    $p->forceDelete();
+                };
+
+
+
+                DB::connection("wholesale")->table('inventory')->truncate();
+                $inventory = Sku::get();
+
+                foreach ($inventory as $p) {
+
+                    WholesaleInventory::FirstOrcreate(
+                        ['sku' => $p->merchant_sku_id,
+                            'product_id' => $p->product_id,
+                            'price' => $p->price / 2,
+                            'stock' => $p->stock,
+                            'order' => $p->sort,
+                            'weight' => $p->weight,
+                            'on_web' => $p->on_web,
+                            'alt_price' => $p->price,
+                            'ship_base' => $p->ship_base,]);
+                }
+
+                dd(" all done");
             }
 
-        public function original_2_import()
+        public
+        function original_2_import()
             {
                 echo "Importing product table <br>";
 
                 DB::table('products')->truncate();
 
-                $cw_products = Cw_Product::get();
+                $cw_products = Cw_Product::where('product_date_modified', '>=', '2017-12-15')->get();
 
                 foreach ($cw_products as $cw) {
 
@@ -312,18 +424,21 @@ class ProductUploadController extends Controller
                 /*            $products = Product::find(873)->update(['name' => str_replace("quot;",'"','name')]);*/
             }
 
-        public function products_2_shopify()
+        public
+        function products_2_shopify()
             {
                 DB::table('shopify_imports')->truncate();
                 $expProducts = [];
                 $shopify_import = new Shopify_import;
                 $productCounter = 0;
 
-                $products = Product::whereDate('date_modified', '>=', '2017-12-20')->orderBy('id')->get();
+                $products = Product::where('is_on_web', TRUE)->where('category1_id', 75)->orderBy('id')->get();
+                //       $products = Product::whereDate('date_modified', '>=', '2017-12-20')->orderBy('id')->get();
                 // $products = Product::where('is_on_web',TRUE)->take(30)->get();
 
                 // $products = Product::get();
                 foreach ($products as $product) {
+                    //    echo $product->cat1->name . '<br>';
                     //                echo $product->id . "->";
                     $productCounter++;
                     $skuCount = $product->skus()->count();
@@ -347,12 +462,13 @@ class ProductUploadController extends Controller
                     }
                 }
                 //         $this->export_csv();
-                dd('Done with ' . $productCounter);
+                dd('Done with ' . $productCounter . 'products.');
                 return;
             }
 
 
-        public function export_csv()
+        public
+        function export_csv()
             {
                 $csvExporter = new \Laracsv\Export();
                 $shopify_import = Shopify_import::get();
@@ -400,15 +516,19 @@ class ProductUploadController extends Controller
 
         function ProductLine($product, $i)
             {
-        //        echo $product->product_id . "<br>";
-       //         dd($product->images->where('imagetype_id',11));
+                //        dd($product);// . '<br>';
+                //    echo $product->category1_id  . "<br>";
+                //     echo $product->category2_id ? $product->cat2->name : 0;
+                //     echo $product->category1_id ? $product->cat1->name : null  . "<br>";
+                ////     echo $product->product_id . "<br>";
+                //    dd($product->images->where('imagetype_id',11));
                 $productLine = [
                     'product_id' => $product->id,
-                    'Handle' => str_replace(' ', '_', str_replace('"','',strtolower ($product->name))) . "_" . $product->id,
+                    'Handle' => str_replace(' ', '_', str_replace('"', '', strtolower($product->name))) . "_" . $product->id,
                     'Title' => $product->name,
                     'Body' => $product->description,
                     'Vendor' => NULL,
-                    'Type' =>$product->cat2->name, //$this->getCategory2($product->category2_id),
+                    'Type' => $product->category2_id ? $product->cat2->name : null, // $this->getCategory2($product->category2_id),
                     'Tags' => $product->keywords,
                     'Published' => $product->is_on_web,
                     'Option1 Name' => $this->getSize($product->id, $i) ? 'Size' : 'Title',
@@ -437,7 +557,7 @@ class ProductUploadController extends Controller
                     'Variant Tax Code' => NULL,
                     'SEO Title' => $product->name,
                     'SEO Description' => $product->description,
-                    'Collection' =>$product->cat1->name // $this->getCategory1($product->category1_id)
+                    'Collection' => $product->category1_id ? $product->cat1->name : null,
                 ];
                 //      dd($productLine);
 
@@ -627,27 +747,28 @@ class ProductUploadController extends Controller
                 return $prices[$v_count];
             }
 
-        function getCategory1($product_id)
-            {
-                $products = Product::findOrFail($product_id)->cat1;
-                echo $product_id;
-                dd($products);
-                foreach ($products as $product) {
-                    return $product->name;
-                }
-            }
+    /*        function getCategory1($product_id)
+                {
+                    $products = Product::findOrFail($product_id)->cat1;
+                    echo $product_id;
+                    foreach ($products as $product) {
+                        dd($product);
+                        return $product->name;
+                    }
+                }*/
 
-/*        function getCategory1($category1_id)
+        function getCategory1($category1_id)
             {
-                $category2 = Category1::where('category1_id',$category1_id);
+                $category2 = Category1::where('category1_id', '=', $category1_id);
                 foreach ($category2 as $cat) {
                     return $cat->name;
                 }
-            }*/
+            }
+
         function getCategory2($category2_id)
             {
                 //         dd($product_id);
-                $category2 = Category1::where('category2_id',$category2_id);
+                $category2 = Category1::where('category2_id', $category2_id);
                 foreach ($category2 as $cat) {
                     return $cat->name;
                 }
@@ -696,7 +817,6 @@ class ProductUploadController extends Controller
 
                     $prefix = '</span>';
                     $clean_str12 = str_replace($prefix, "", $clean_str11);
-
 
 
                     $prefix = '</div>';
